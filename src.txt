@@ -1,0 +1,39 @@
+src
+├── app
+│   ├── about
+│   │   └── page.tsx
+│   ├── contact
+│   │   └── page.tsx
+│   ├── portfolio
+│   │   └── page.tsx
+│   ├── services
+│   │   └── page.tsx
+│   ├── favicon.ico
+│   ├── globals.css
+│   ├── layout.tsx
+│   └── page.tsx
+└── components
+    ├── Footer.tsx
+    ├── Header.tsx
+    └── ui
+export default function About() {
+  return (
+    <div className="container mx-auto px-4 py-16">
+      <div className="max-w-3xl mx-auto text-center">
+        <h1 className="text-4xl font-bold">About Us</h1>
+        <p className="mt-4 text-lg text-gray-600">
+          We are a team of passionate developers, designers, and strategists dedicated to crafting exceptional web experiences.
+        </p>
+      </div>
+
+      <div className="max-w-4xl mx-auto mt-12 text-gray-700 text-lg">
+        <p>
+          Founded in [Year], our mission has always been to help businesses leverage technology to achieve their goals. We believe in collaboration, innovation, and delivering value to our clients.
+        </p>
+        <p className="mt-4">
+          Our team's expertise spans across various technologies and industries, allowing us to tackle a wide range of challenges and deliver robust, high-quality web solutions.
+        </p>
+      </div>
+    </div>
+  );
+}
