@@ -1,173 +1,149 @@
 import type { Metadata } from "next";
-import { Check, Code, Smartphone, Bot, Cloud, Briefcase, Megaphone, Palette, BrainCircuit, Clapperboard } from "lucide-react";
-import SectionHeading from "@/components/SectionHeading";
-import ProcessTimeline from "@/components/ProcessTimeline";
+import { Code, Database, Wind, Bot, GitBranch, Figma, Framer, Zap, Scale, Feather } from "lucide-react";
 import TiltCard from "@/components/TiltCard";
+import SectionHeading from "@/components/SectionHeading";
 import CTASection from "@/components/CTASection";
 
 export const metadata: Metadata = {
-  title: "Services — HM Tech",
-  description: "A comprehensive suite of technology services to bring your ideas to life and accelerate your business.",
+  title: "Technologies — HM Tech",
+  description:
+    "The modern, scalable, and robust technologies we use to build high-performant solutions.",
 };
 
-export const services = [
+const techCategories = [
   {
-    icon: Code,
-    title: "Software Development",
-    copy: "Custom software solutions built with modern technologies and best practices.",
+    name: "Frontend",
+    techs: [
+      {
+        icon: Code,
+        name: "Next.js & React",
+        copy: "For building performant, server-rendered React applications with the latest features.",
+      },
+      {
+        icon: Code,
+        name: "TypeScript",
+        copy: "To ensure type safety and improve developer experience, leading to more robust code.",
+      },
+      {
+        icon: Wind,
+        name: "Tailwind CSS",
+        copy: "A utility-first CSS framework for rapidly building custom, modern user interfaces.",
+      },
+      {
+        icon: Framer,
+        name: "Framer Motion",
+        copy: "For creating fluid animations and complex micro-interactions that bring sites to life.",
+      },
+    ],
   },
   {
-    icon: Code,
-    title: "Web Development",
-    copy: "High-performance websites and web applications that deliver exceptional user experiences.",
+    name: "3D & Graphics",
+    techs: [
+      {
+        icon: Bot,
+        name: "React Three Fiber",
+        copy: "A powerful React renderer for Three.js to create and manage 3D scenes declaratively.",
+      },
+      {
+        icon: Bot,
+        name: "Drei",
+        copy: "A collection of useful helpers and abstractions for React Three Fiber.",
+      },
+    ],
   },
   {
-    icon: Smartphone,
-    title: "Mobile App Development",
-    copy: "Native and cross-platform mobile apps for iOS and Android that users love.",
-  },
-  {
-    icon: Bot,
-    title: "AI & Automation",
-    copy: "Intelligent automation and AI solutions to streamline processes and boost productivity.",
-  },
-  {
-    icon: Cloud,
-    title: "Cloud Solutions",
-    copy: "Scalable cloud infrastructure and solutions to accelerate business growth.",
-  },
-  {
-    icon: Briefcase,
-    title: "ERP Solutions",
-    copy: "Custom ERP systems to manage and integrate business operations seamlessly.",
-  },
-  {
-    icon: Megaphone,
-    title: "Digital Marketing",
-    copy: "Data-driven marketing strategies to grow your brand and reach the right audiences.",
-  },
-  {
-    icon: Clapperboard,
-    title: "Cinematography",
-    copy: "Professional video production and cinematography to bring your brand's story to life.",
-  },
-  { icon: Palette, title: "UI/UX Design", copy: "Beautiful, intuitive designs that enhance user experience and drive engagement." },
-  {
-    icon: BrainCircuit,
-    title: "IT Consultancy",
-    copy: "Expert guidance and consulting to help you make the right technology decisions.",
-  },
-];
-
-const engagements = [
-  {
-    name: "Sprint",
-    price: "From $18k",
-    period: "/ 4-week engagement",
-    copy: "A focused build to validate one product surface fast.",
-    features: ["1 designer + 1 engineer", "Working prototype in week 2", "Production-ready by week 4"],
-    highlighted: false,
-  },
-  {
-    name: "Studio",
-    price: "From $42k",
-    period: "/ month",
-    copy: "An embedded team shipping your roadmap continuously.",
-    features: ["Full product pod (design + eng)", "Weekly releases", "Direct Slack access to the team", "Quarterly roadmap planning"],
-    highlighted: true,
-  },
-  {
-    name: "Platform",
-    price: "Custom",
-    period: "/ scoped",
-    copy: "Large-scale modernization or multi-product builds.",
-    features: ["Multiple pods across workstreams", "Dedicated tech lead", "Infra & security review", "SLA-backed support"],
-    highlighted: false,
+    name: "Infrastructure & Tooling",
+    techs: [
+      {
+        icon: Database,
+        name: "Vercel",
+        copy: "For seamless deployment, hosting, and scaling of our Next.js applications.",
+      },
+      {
+        icon: GitBranch,
+        name: "Git & GitHub",
+        copy: "For version control and collaborative development, ensuring a streamlined workflow.",
+      },
+      {
+        icon: Figma,
+        name: "Figma",
+        copy: "For collaborative interface design, prototyping, and a seamless design-to-code handoff.",
+      },
+    ],
   },
 ];
 
-export default function ServicesPage() {
+const philosophy = [
+  {
+    icon: Zap,
+    title: "Performance by Default",
+    copy: "We select frameworks and infrastructure that prioritize speed, ensuring your product is fast and responsive from the very first build.",
+  },
+  {
+    icon: Scale,
+    title: "Scalable & Maintainable",
+    copy: "Our stack is chosen for its ability to grow with your business. We write clean, well-documented code that's easy for any team to inherit.",
+  },
+  {
+    icon: Feather,
+    title: "Delightful Experiences",
+    copy: "Great products are more than just functional. We use tools that enable us to create smooth animations and memorable interactions that users love.",
+  },
+];
+
+export default function TechnologiesPage() {
   return (
     <>
       <section className="relative overflow-hidden">
         <div className="pointer-events-none absolute inset-0 bg-iris-radial" />
         <div className="container-px relative mx-auto max-w-4xl pb-6 pt-16 text-center md:pt-24">
           <p className="eyebrow inline-flex items-center gap-2 rounded-full border border-iris-100 bg-white px-3 py-1.5 shadow-iris-sm">
-            Services
+            Our Tech Stack
           </p>
           <h1 className="mt-6 font-display text-4xl font-semibold leading-tight tracking-tight text-ink md:text-5xl">
-            One team, from
-            <span className="text-gradient"> concept to production.</span>
+            Built with the
+            <span className="text-gradient"> best in class.</span>
           </h1>
           <p className="mx-auto mt-6 max-w-2xl text-base leading-relaxed text-ink/60 md:text-lg">
-            Every project draws from the same six disciplines, mixed to fit
-            what you actually need — never a fixed package you have to bend
-            your problem to fit.
+            We leverage a curated set of modern, scalable technologies to build robust and
+            high-performant solutions that feel dimensional and are a joy to use.
           </p>
         </div>
       </section>
 
       <section className="section-py container-px mx-auto max-w-7xl">
-        <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
-          {services.map((s) => (
-            <TiltCard key={s.title}>
-              <div className="grid h-12 w-12 place-items-center rounded-xl bg-iris-gradient text-white shadow-iris-sm">
-                <s.icon className="h-6 w-6" />
-              </div>
-              <h3 className="mt-6 font-display text-lg font-semibold text-ink">{s.title}</h3>
-              <p className="mt-2.5 text-sm leading-relaxed text-ink/60">{s.copy}</p>
-            </TiltCard>
-          ))}
-        </div>
+        {techCategories.map((category) => (
+          <div key={category.name} className="mb-12 last:mb-0">
+            <h2 className="mb-8 font-display text-2xl font-semibold text-ink">{category.name}</h2>
+            <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
+              {category.techs.map((tech) => (
+                <TiltCard key={tech.name}>
+                  <div className="grid h-12 w-12 place-items-center rounded-xl bg-iris-gradient text-white shadow-iris-sm">
+                    <tech.icon className="h-6 w-6" />
+                  </div>
+                  <h3 className="mt-6 font-display text-lg font-semibold text-ink">{tech.name}</h3>
+                  <p className="mt-2.5 text-sm leading-relaxed text-ink/60">{tech.copy}</p>
+                </TiltCard>
+              ))}
+            </div>
+          </div>
+        ))}
       </section>
 
       <section className="section-py container-px mx-auto max-w-7xl bg-mist">
-        <SectionHeading eyebrow="Engagement process" title="How a project moves through our studio." align="center" />
-        <div className="mt-14">
-          <ProcessTimeline />
-        </div>
-      </section>
-
-      <section className="section-py container-px mx-auto max-w-7xl">
-        <SectionHeading eyebrow="Ways to work together" title="Pick the shape that matches your stage." align="center" />
+        <SectionHeading
+          eyebrow="Our Philosophy"
+          title="The principles that guide our choices."
+          align="center"
+        />
         <div className="mt-12 grid grid-cols-1 gap-6 md:grid-cols-3">
-          {engagements.map((e) => (
-            <div
-              key={e.name}
-              className={`relative rounded-2xl border p-8 ${
-                e.highlighted
-                  ? "border-iris-600 bg-ink text-white shadow-iris"
-                  : "border-iris-100 bg-white shadow-iris-sm"
-              }`}
-            >
-              {e.highlighted && (
-                <span className="absolute -top-3 left-8 rounded-full bg-iris-gradient px-3 py-1 text-xs font-semibold text-white">
-                  Most popular
-                </span>
-              )}
-              <h3 className={`font-display text-xl font-semibold ${e.highlighted ? "text-white" : "text-ink"}`}>
-                {e.name}
-              </h3>
-              <p className={`mt-1 text-sm ${e.highlighted ? "text-white/60" : "text-ink/55"}`}>{e.copy}</p>
-              <p className="mt-6">
-                <span className={`font-display text-3xl font-semibold ${e.highlighted ? "text-white" : "text-ink"}`}>
-                  {e.price}
-                </span>
-                <span className={`ml-1.5 text-xs ${e.highlighted ? "text-white/50" : "text-ink/45"}`}>{e.period}</span>
-              </p>
-              <ul className="mt-7 space-y-3 border-t border-white/10 pt-6">
-                {e.features.map((f) => (
-                  <li
-                    key={f}
-                    className={`flex items-start gap-2.5 text-sm ${
-                      e.highlighted ? "text-white/80" : "text-ink/70"
-                    }`}
-                  >
-                    <Check className={`mt-0.5 h-4 w-4 shrink-0 ${e.highlighted ? "text-iris-300" : "text-iris-600"}`} />
-                    {f}
-                  </li>
-                ))}
-              </ul>
+          {philosophy.map((p) => (
+            <div key={p.title} className="card-surface p-7">
+              <div className="grid h-12 w-12 place-items-center rounded-xl bg-iris-gradient text-white shadow-iris-sm">
+                <p.icon className="h-6 w-6" />
+              </div>
+              <h3 className="mt-6 font-display text-lg font-semibold text-ink">{p.title}</h3>
+              <p className="mt-2.5 text-sm leading-relaxed text-ink/60">{p.copy}</p>
             </div>
           ))}
         </div>
