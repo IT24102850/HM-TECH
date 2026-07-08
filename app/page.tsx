@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { ArrowUpRight, Boxes, Cpu, LayoutGrid, ShieldCheck, Sparkles, Wand2 } from "lucide-react";
+import { ArrowUpRight, ShieldCheck, Sparkles, Wand2 } from "lucide-react";
 import CubeField from "@/components/CubeField";
 import SectionHeading from "@/components/SectionHeading";
 import StatsStrip from "@/components/StatsStrip";
@@ -99,7 +99,7 @@ export default function Home() {
         </div>
       </section>
 
-      {/* WORK PREVIEW */}
+      {/* TECHNOLOGY STACK PREVIEW */}
       <section className="section-py container-px mx-auto max-w-7xl">
         <div className="flex flex-col items-start justify-between gap-6 md:flex-row md:items-end">
           <SectionHeading
@@ -108,7 +108,7 @@ export default function Home() {
             description="We leverage modern, scalable technologies to build robust and high-performant solutions."
           />
           <Link href="/technologies" className="hidden shrink-0 items-center gap-1.5 text-sm font-semibold text-iris-700 md:inline-flex">
-            Explore our stack <ArrowUpRight className="h-4 w-4" />
+            Explore full stack <ArrowUpRight className="h-4 w-4" />
           </Link>
         </div>
         <div className="mt-12">
