@@ -6,6 +6,7 @@ import StatsStrip from "@/components/StatsStrip";
 import ProcessTimeline from "@/components/ProcessTimeline";
 import TiltCard from "@/components/TiltCard";
 import CTASection from "@/components/CTASection";
+import TechStackGrid from "@/components/TechStackGrid";
 
 import { services } from "./services/page";
 
@@ -109,6 +110,9 @@ export default function Home() {
           <Link href="/technologies" className="hidden shrink-0 items-center gap-1.5 text-sm font-semibold text-iris-700 md:inline-flex">
             Explore our stack <ArrowUpRight className="h-4 w-4" />
           </Link>
+        </div>
+        <div className="mt-12">
+          <TechStackGrid />
         </div>
       </section>
 
