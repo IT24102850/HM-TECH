@@ -7,29 +7,7 @@ import ProcessTimeline from "@/components/ProcessTimeline";
 import TiltCard from "@/components/TiltCard";
 import CTASection from "@/components/CTASection";
 
-const services = [
-  {
-    icon: Boxes,
-    title: "Product Engineering",
-    copy: "Full-stack builds on Next.js, TypeScript, and modern infra, engineered to scale past the demo.",
-  },
-  {
-    icon: Sparkles,
-    title: "3D & Motion Design",
-    copy: "WebGL scenes, scroll-tied animation, and micro-interaction systems that make software feel alive.",
-  },
-  {
-    icon: LayoutGrid,
-    title: "Design Systems",
-    copy: "Token-driven UI kits your team can extend, so every new screen ships fast and stays on-brand.",
-  },
-];
-
-const work = [
-  { tag: "Fintech", name: "Ledgerline", result: "37% faster checkout" },
-  { tag: "Healthtech", name: "Vitalcare OS", result: "2.1x clinician adoption" },
-  { tag: "Logistics", name: "Portway", result: "19% lower fleet idle-time" },
-];
+import { services } from "./services/page";
 
 export default function Home() {
   return (
@@ -55,8 +33,8 @@ export default function Home() {
               <Link href="/contact" className="btn-primary">
                 Start a project <ArrowUpRight className="h-4 w-4" />
               </Link>
-              <Link href="/portfolio" className="btn-ghost">
-                View our work
+              <Link href="/technologies" className="btn-ghost">
+                Our Tech Stack
               </Link>
             </div>
             <div className="mt-10 flex items-center gap-6 text-xs text-ink/45">
@@ -95,7 +73,7 @@ export default function Home() {
         </div>
 
         <div className="mt-12 grid grid-cols-1 gap-6 md:grid-cols-3">
-          {services.map((s) => (
+          {services.slice(0, 3).map((s) => (
             <TiltCard key={s.title}>
               <div className="grid h-12 w-12 place-items-center rounded-xl bg-iris-gradient text-white shadow-iris-sm">
                 <s.icon className="h-6 w-6" />
@@ -124,25 +102,13 @@ export default function Home() {
       <section className="section-py container-px mx-auto max-w-7xl">
         <div className="flex flex-col items-start justify-between gap-6 md:flex-row md:items-end">
           <SectionHeading
-            eyebrow="Selected work"
-            title="Recent launches, real outcomes."
+            eyebrow="Our Technology Stack"
+            title="Built with the best in class."
+            description="We leverage modern, scalable technologies to build robust and high-performant solutions."
           />
-          <Link href="/portfolio" className="hidden shrink-0 items-center gap-1.5 text-sm font-semibold text-iris-700 md:inline-flex">
-            Full portfolio <ArrowUpRight className="h-4 w-4" />
+          <Link href="/technologies" className="hidden shrink-0 items-center gap-1.5 text-sm font-semibold text-iris-700 md:inline-flex">
+            Explore our stack <ArrowUpRight className="h-4 w-4" />
           </Link>
-        </div>
-
-        <div className="mt-12 grid grid-cols-1 gap-6 md:grid-cols-3">
-          {work.map((w) => (
-            <TiltCard key={w.name}>
-              <div className="flex h-40 items-center justify-center rounded-xl bg-iris-gradient">
-                <Cpu className="h-10 w-10 text-white/90" />
-              </div>
-              <p className="mt-6 font-mono text-xs uppercase tracking-wider text-iris-500">{w.tag}</p>
-              <h3 className="mt-2 font-display text-lg font-semibold text-ink">{w.name}</h3>
-              <p className="mt-2 text-sm text-ink/60">{w.result}</p>
-            </TiltCard>
-          ))}
         </div>
       </section>
 

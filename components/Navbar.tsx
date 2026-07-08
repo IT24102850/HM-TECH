@@ -11,7 +11,7 @@ const links = [
   { href: "/", label: "Home" },
   { href: "/about", label: "About" },
   { href: "/services", label: "Services" },
-  { href: "/portfolio", label: "Portfolio" },
+  { href: "/technologies", label: "Technologies" },
   { href: "/contact", label: "Contact" },
 ];
 
@@ -32,13 +32,7 @@ export default function Navbar() {
   }, [pathname]);
 
   return (
-    <header
-      className={`sticky top-0 z-50 transition-all duration-300 ${
-        scrolled
-          ? "bg-white/80 backdrop-blur-xl border-b border-iris-100 shadow-[0_1px_0_rgba(109,40,217,0.06)]"
-          : "bg-white/40 backdrop-blur-sm"
-      }`}
-    >
+    <header className={`sticky top-0 z-50 transition-all duration-300 ${scrolled ? "bg-white/80 backdrop-blur-xl border-b border-iris-100 shadow-[0_1px_0_rgba(109,40,217,0.06)]" : "bg-white/40 backdrop-blur-sm"}`}>
       <nav className="container-px mx-auto flex max-w-7xl items-center justify-between py-4">
         <Link href="/" className="flex items-center gap-2.5">
           <Image src="/logo.png" alt="HM Tech" width={132} height={68} priority className="h-9 w-auto md:h-10" />

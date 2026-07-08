@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Check, Boxes, Sparkles, LayoutGrid, Gauge, Server, PenTool } from "lucide-react";
+import { Check, Code, Smartphone, Bot, Cloud, Briefcase, Megaphone, Palette, BrainCircuit, Clapperboard } from "lucide-react";
 import SectionHeading from "@/components/SectionHeading";
 import ProcessTimeline from "@/components/ProcessTimeline";
 import TiltCard from "@/components/TiltCard";
@@ -7,45 +7,55 @@ import CTASection from "@/components/CTASection";
 
 export const metadata: Metadata = {
   title: "Services — HM Tech",
-  description: "Product engineering, 3D & motion design, and design systems delivered by one senior team.",
+  description: "A comprehensive suite of technology services to bring your ideas to life and accelerate your business.",
 };
 
-const services = [
+export const services = [
   {
-    icon: Boxes,
-    title: "Product Engineering",
-    copy: "Full-stack platforms built on Next.js, TypeScript, and modern cloud infrastructure — architected to survive real traffic, not just a demo day.",
-    points: ["Web app & API architecture", "Performance & Core Web Vitals", "CI/CD and infra-as-code"],
+    icon: Code,
+    title: "Software Development",
+    copy: "Custom software solutions built with modern technologies and best practices.",
   },
   {
-    icon: Sparkles,
-    title: "3D & Motion Design",
-    copy: "WebGL scenes, scroll-tied storytelling, and interaction detail that turn a page into something people actually want to explore.",
-    points: ["Three.js / React Three Fiber builds", "Scroll & gesture-driven animation", "Performance-budgeted 3D assets"],
+    icon: Code,
+    title: "Web Development",
+    copy: "High-performance websites and web applications that deliver exceptional user experiences.",
   },
   {
-    icon: LayoutGrid,
-    title: "Design Systems",
-    copy: "Token-based UI kits — color, type, spacing, components — so every new screen your team ships stays fast and on-brand.",
-    points: ["Figma-to-code token pipelines", "Accessible component libraries", "Documentation your team will use"],
+    icon: Smartphone,
+    title: "Mobile App Development",
+    copy: "Native and cross-platform mobile apps for iOS and Android that users love.",
   },
   {
-    icon: Gauge,
-    title: "Platform Modernization",
-    copy: "Migrate aging stacks to modern frameworks without a big-bang rewrite, so the product keeps shipping while it's rebuilt underneath.",
-    points: ["Incremental Next.js migration", "Legacy API decomposition", "Zero-downtime cutovers"],
+    icon: Bot,
+    title: "AI & Automation",
+    copy: "Intelligent automation and AI solutions to streamline processes and boost productivity.",
   },
   {
-    icon: Server,
-    title: "Platform & DevOps",
-    copy: "Cloud infrastructure that scales predictably, with observability built in from day one instead of bolted on after an incident.",
-    points: ["AWS / Vercel infrastructure", "Monitoring & alerting setup", "Cost and reliability audits"],
+    icon: Cloud,
+    title: "Cloud Solutions",
+    copy: "Scalable cloud infrastructure and solutions to accelerate business growth.",
   },
   {
-    icon: PenTool,
-    title: "Brand-to-Product Design",
-    copy: "Translate an identity like a logo and palette into a full interface language — the way this very site was built from HM Tech's mark.",
-    points: ["Visual identity extension", "Interface & marketing site design", "Motion & micro-interaction rules"],
+    icon: Briefcase,
+    title: "ERP Solutions",
+    copy: "Custom ERP systems to manage and integrate business operations seamlessly.",
+  },
+  {
+    icon: Megaphone,
+    title: "Digital Marketing",
+    copy: "Data-driven marketing strategies to grow your brand and reach the right audiences.",
+  },
+  {
+    icon: Clapperboard,
+    title: "Cinematography",
+    copy: "Professional video production and cinematography to bring your brand's story to life.",
+  },
+  { icon: Palette, title: "UI/UX Design", copy: "Beautiful, intuitive designs that enhance user experience and drive engagement." },
+  {
+    icon: BrainCircuit,
+    title: "IT Consultancy",
+    copy: "Expert guidance and consulting to help you make the right technology decisions.",
   },
 ];
 
@@ -106,14 +116,6 @@ export default function ServicesPage() {
               </div>
               <h3 className="mt-6 font-display text-lg font-semibold text-ink">{s.title}</h3>
               <p className="mt-2.5 text-sm leading-relaxed text-ink/60">{s.copy}</p>
-              <ul className="mt-5 space-y-2.5 border-t border-iris-100 pt-5">
-                {s.points.map((p) => (
-                  <li key={p} className="flex items-start gap-2.5 text-sm text-ink/70">
-                    <Check className="mt-0.5 h-4 w-4 shrink-0 text-iris-600" />
-                    {p}
-                  </li>
-                ))}
-              </ul>
             </TiltCard>
           ))}
         </div>
