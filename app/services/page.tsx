@@ -122,29 +122,3 @@ export default function ServicesPage() {
     </>
   );
 }
-        ))}
-      </section>
-
-      <section className="section-py container-px mx-auto max-w-7xl bg-mist">
-        <SectionHeading
-          eyebrow="Our Philosophy"
-          title="The principles that guide our choices."
-          align="center"
-        />
-        <div className="mt-12 grid grid-cols-1 gap-6 md:grid-cols-3">
-          {philosophy.map((p) => (
-            <div key={p.title} className="card-surface p-7">
-              <div className="grid h-12 w-12 place-items-center rounded-xl bg-iris-gradient text-white shadow-iris-sm">
-                <p.icon className="h-6 w-6" />
-              </div>
-              <h3 className="mt-6 font-display text-lg font-semibold text-ink">{p.title}</h3>
-              <p className="mt-2.5 text-sm leading-relaxed text-ink/60">{p.copy}</p>
-            </div>
-          ))}
-        </div>
-      </section>
-
-      <CTASection />
-    </>
-  );
-}
