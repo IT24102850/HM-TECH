@@ -1,5 +1,20 @@
 import type { Metadata } from "next";
-import { ArrowUpRight, Check, Boxes, Cpu, LayoutGrid } from "lucide-react";
+import {
+  ArrowUpRight,
+  Check,
+  Code,
+  Globe,
+  Smartphone,
+  BrainCircuit,
+  Cloud,
+  Network,
+  TrendingUp,
+  Camera,
+  PenTool,
+  Lightbulb,
+  Boxes,
+  Cpu,
+} from "lucide-react";
 import Link from "next/link";
 import TiltCard from "@/components/TiltCard";
 import SectionHeading from "@/components/SectionHeading";
@@ -13,19 +28,54 @@ export const metadata: Metadata = {
 
 export const services = [
   {
-    icon: LayoutGrid,
-    title: "Product Strategy & Design",
-    copy: "We'll help you define the problem, map your users' needs, and design a product that's not just functional, but delightful to use.",
+    icon: Code,
+    title: "Software Development",
+    copy: "Custom software solutions built with modern technologies and best practices.",
   },
   {
-    icon: Cpu,
-    title: "Full-Stack Engineering",
-    copy: "From database to deployment, our senior-only team builds robust, scalable systems that are built to last and easy to maintain.",
+    icon: Globe,
+    title: "Web Development",
+    copy: "High-performance websites and web applications that deliver exceptional user experiences.",
   },
   {
-    icon: Boxes,
-    title: "3D & Motion",
-    copy: "We bring products to life with interactive 3D graphics and fluid animations that create memorable, dimensional experiences.",
+    icon: Smartphone,
+    title: "Mobile App Development",
+    copy: "Native and cross-platform mobile apps for iOS and Android that users love.",
+  },
+  {
+    icon: BrainCircuit,
+    title: "AI & Automation",
+    copy: "Intelligent automation and AI solutions to streamline processes and boost productivity.",
+  },
+  {
+    icon: Cloud,
+    title: "Cloud Solutions",
+    copy: "Scalable cloud infrastructure and solutions to accelerate business growth.",
+  },
+  {
+    icon: Network,
+    title: "ERP Solutions",
+    copy: "Custom ERP systems to manage and integrate business operations seamlessly.",
+  },
+  {
+    icon: TrendingUp,
+    title: "Digital Marketing",
+    copy: "Data-driven marketing strategies to grow your brand and reach the right audiences.",
+  },
+  {
+    icon: Camera,
+    title: "Cinematography",
+    copy: "Professional video production and visual storytelling to bring your brand's narrative to life.",
+  },
+  {
+    icon: PenTool,
+    title: "UI/UX Design",
+    copy: "Beautiful, intuitive designs that enhance user experience and drive engagement.",
+  },
+  {
+    icon: Lightbulb,
+    title: "IT Consultancy",
+    copy: "Expert guidance and consulting to help you make the right technology decisions.",
   },
 ];
 
@@ -71,7 +121,7 @@ export default function ServicesPage() {
       </section>
 
       <section className="section-py container-px mx-auto max-w-7xl">
-        <div className="grid grid-cols-1 gap-6 md:grid-cols-3">
+        <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
           {services.map((s) => (
             <TiltCard key={s.title}>
               <div className="grid h-12 w-12 place-items-center rounded-xl bg-iris-gradient text-white shadow-iris-sm">
