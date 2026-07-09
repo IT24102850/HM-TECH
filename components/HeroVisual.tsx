@@ -408,6 +408,12 @@ function DeviceChip({ reduceMotion }: { reduceMotion: boolean }) {
 // ───────────────────────────────────────────
 export default function HeroVisual() {
   const reduceMotion = Boolean(useReducedMotion());
+  const [isMounted, setIsMounted] = useState(false);
+
+  useEffect(() => {
+    // This ensures client-side-only components don't cause a hydration mismatch.
+    setIsMounted(true);
+  }, []);
 
   return (
     <div
@@ -423,12 +429,15 @@ export default function HeroVisual() {
         </Suspense>
       </div>
 
-      <ConnectorLines reduceMotion={reduceMotion} />
-
-      <DeployStatusCard reduceMotion={reduceMotion} />
-      <CodeEditorCard reduceMotion={reduceMotion} />
-      <AIBadge reduceMotion={reduceMotion} />
-      <DeviceChip reduceMotion={reduceMotion} />
+      {isMounted && (
+        <>
+          <ConnectorLines reduceMotion={reduceMotion} />
+          <DeployStatusCard reduceMotion={reduceMotion} />
+          <CodeEditorCard reduceMotion={reduceMotion} />
+          <AIBadge reduceMotion={reduceMotion} />
+          <DeviceChip reduceMotion={reduceMotion} />
+        </>
+      )}
 
       <style jsx global>{`
         @media (prefers-reduced-motion: reduce) {

@@ -413,6 +413,10 @@ function LaptopModel({ screenMeshName }: LaptopModelProps) {
       }
     });
     if (!best) {
+      // If heuristic fails, try common names as a fallback
+      best = (nodes?.Screen || nodes?.display || null) as THREE.Mesh | null;
+    }
+    if (!best) {
       console.error(
         "HM-TECH: no screen-like mesh found in the model. Check the mesh log above and pass screenMeshName explicitly."
       );
