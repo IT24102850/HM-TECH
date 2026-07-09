@@ -4,7 +4,6 @@ import { Suspense, useMemo, useRef } from "react";
 import { Canvas, useFrame } from "@react-three/fiber";
 import { useGLTF, Html, Environment, Float } from "@react-three/drei";
 import { TrendingUp } from "lucide-react";
-impord:\My projects\ULTRON\New folder\hmtech-laptop3d\HM-TECH\components\Laptop3D.tsxt * as THREE from "three";
 import * as THREE from "three";
 
 function LaptopScreenContent() {
