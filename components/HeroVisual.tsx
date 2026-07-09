@@ -1,132 +1,82 @@
 "use client";
 
-import dynamic from "next/dynamic";
-import { motion, useReducedMotion, type Variants } from "framer-motion";
+import { motion } from "framer-motion";
 import { BrainCircuit, Smartphone } from "lucide-react";
-
-// The 3D canvas is client-only and fairly heavy — load it lazily so it
-// never touches the server render, and doesn't block the rest of the hero.
-const Laptop3D = dynamic(() => import("@/components/Laptop3D"), {
-  ssr: false,
-});
-
-const codeLines = [
-  { text: "const build = () => {", color: "#8B5CF6" },
-  { text: "  deploy(app).then(", color: "#E5E7EB" },
-  { text: "    () => scale(∞)", color: "#34D399" },
-  { text: "  );", color: "#E5E7EB" },
-];
-
-function CodeEditorCard({ reduceMotion }: { reduceMotion: boolean }) {
-  const container: Variants = {
-    animate: {
-      transition: {
-        staggerChildren: reduceMotion ? 0 : 0.35,
-        repeat: reduceMotion ? 0 : Infinity,
-        repeatDelay: reduceMotion ? 0 : 1.6,
-      },
-    },
-  };
-  const line: Variants = {
-    initial: { opacity: reduceMotion ? 1 : 0.15, x: reduceMotion ? 0 : -8 },
-    animate: {
-      opacity: [reduceMotion ? 1 : 0.15, 1, 1, reduceMotion ? 1 : 0.15],
-      x: [reduceMotion ? 0 : -8, 0, 0, reduceMotion ? 0 : -8],
-      transition: { duration: reduceMotion ? 0 : 3.2, ease: "easeInOut" },
-    },
-  };
-
-  return (
-    <div
-      className="absolute -left-4 top-8 hidden w-52 rounded-xl bg-zinc-900/95 p-3 shadow-iris backdrop-blur sm:block md:-left-8 md:top-16"
-      aria-hidden="true"
-    >
-      <div className="mb-2 flex items-center gap-1.5">
-        <span className="h-2.5 w-2.5 rounded-full bg-[#FF5F56]" />
-        <span className="h-2.5 w-2.5 rounded-full bg-[#FFBD2E]" />
-        <span className="h-2.5 w-2.5 rounded-full bg-[#27C93F]" />
-      </div>
-      <motion.div
-        variants={container}
-        initial="initial"
-        animate="animate"
-        className="space-y-1 font-mono text-[10.5px] leading-relaxed"
-      >
-        {codeLines.map((l, i) => (
-          <motion.div key={i} variants={line} style={{ color: l.color }}>
-            {l.text}
-          </motion.div>
-        ))}
-      </motion.div>
-    </div>
-  );
-}
-
-function AIBadge({ reduceMotion }: { reduceMotion: boolean }) {
-  return (
-    <div
-      className="absolute -right-2 top-2 hidden sm:block md:right-2"
-      aria-hidden="true"
-    >
-      <div className="relative grid h-14 w-14 place-items-center">
-        <motion.span
-          className="absolute inset-0 rounded-full bg-iris-gradient"
-          initial={{ opacity: 0.4, scale: reduceMotion ? 1 : 0.85 }}
-          animate={
-            reduceMotion
-              ? { opacity: 0.4, scale: 1 }
-              : { opacity: [0.4, 0.05, 0.4], scale: [0.85, 1.35, 0.85] }
-          }
-          transition={{
-            duration: reduceMotion ? 0 : 2.6,
-            repeat: reduceMotion ? 0 : Infinity,
-            ease: "easeInOut",
-          }}
-        />
-        <div className="relative grid h-14 w-14 place-items-center rounded-full bg-iris-gradient shadow-iris">
-          <BrainCircuit className="h-6 w-6 text-white" />
-        </div>
-      </div>
-    </div>
-  );
-}
-
-function DeviceCard({ reduceMotion }: { reduceMotion: boolean }) {
-  return (
-    <motion.div
-      className="absolute bottom-6 right-4 hidden rounded-2xl border border-iris-100 bg-white/95 p-3 shadow-iris-sm backdrop-blur sm:block md:bottom-10 md:right-0"
-      aria-hidden="true"
-      initial={{ y: reduceMotion ? 0 : 6 }}
-      animate={reduceMotion ? { y: 0 } : { y: [6, -6, 6] }}
-      transition={{
-        duration: reduceMotion ? 0 : 5,
-        repeat: reduceMotion ? 0 : Infinity,
-        ease: "easeInOut",
-        delay: reduceMotion ? 0 : 1.1,
-      }}
-    >
-      <div className="grid h-9 w-9 place-items-center rounded-xl bg-iris-100">
-        <Smartphone className="h-4.5 w-4.5 text-iris-700" />
-      </div>
-    </motion.div>
-  );
-}
+import Laptop3D from "./Laptop3D";
 
 export default function HeroVisual() {
-  const prefersReducedMotion = useReducedMotion();
-  const reduceMotion = Boolean(prefersReducedMotion);
-
   return (
-    <div className="relative h-[440px] w-full md:h-[580px]">
-      {/* 3D canvas — kept at full height on tablet+, shorter on phones via
-          the container above so it doesn't dominate the mobile viewport. */}
-      <div className="absolute inset-0">
-        <Laptop3D />
-      </div>
+    <div className="relative h-[420px] w-full md:h-[560px]">
+      <Laptop3D />
 
-      <CodeEditorCard reduceMotion={reduceMotion} />
-      <AIBadge reduceMotion={reduceMotion} />
-      <DeviceCard reduceMotion={reduceMotion} />
+      {/* Floating Code Editor */}
+      <motion.div
+        initial={{ opacity: 0, y: 30 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ delay: 0.4, duration: 0.5, ease: "easeOut" }}
+        className="absolute -right-6 top-12 hidden w-64 rounded-2xl border border-white/10 bg-zinc-950 p-4 shadow-2xl md:block"
+        style={{ boxShadow: "0 25px 50px -12px rgb(0 0 0 / 0.4)" }}
+      >
+        <div className="flex items-center gap-2 border-b border-white/10 pb-2">
+          <div className="flex gap-1.5">
+            <div className="h-2.5 w-2.5 rounded-full bg-red-500" />
+            <div className="h-2.5 w-2.5 rounded-full bg-yellow-500" />
+            <div className="h-2.5 w-2.5 rounded-full bg-green-500" />
+          </div>
+          <div className="font-mono text-xs text-white/50">app.tsx</div>
+        </div>
+        <div className="mt-3 space-y-1.5 font-mono text-xs text-emerald-400">
+          {["const project = {", "  team: 'HM Tech',", "  status: 'deployed',", "  ai: true", "}"].map((line, i) => (
+            <motion.div
+              key={i}
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{
+                delay: 0.8 + i * 0.2,
+                repeat: Infinity,
+                repeatDelay: 4,
+                duration: 0.2,
+              }}
+            >
+              <span style={{ textShadow: "0 0 8px currentColor" }}>{line}</span>
+            </motion.div>
+          ))}
+        </div>
+      </motion.div>
+
+      {/* AI Badge */}
+      <motion.div
+        initial={{ opacity: 0, scale: 0.8 }}
+        animate={{
+          opacity: [0.9, 1, 0.9],
+          scale: [1, 1.08, 1],
+        }}
+        transition={{ duration: 3.5, repeat: Infinity, delay: 0.2 }}
+        className="absolute -left-4 top-1/3 hidden md:block"
+      >
+        <div className="flex h-20 w-20 items-center justify-center rounded-full border-4 border-white/80 bg-gradient-to-br from-violet-600 to-fuchsia-600 p-1 shadow-xl">
+          <BrainCircuit className="h-10 w-10 text-white" />
+        </div>
+      </motion.div>
+
+      {/* Device Sync Card */}
+      <motion.div
+        initial={{ opacity: 0, y: 20 }}
+        animate={{
+          y: [0, -12, 0],
+          opacity: 1,
+        }}
+        transition={{ duration: 4, repeat: Infinity, ease: "easeInOut", delay: 0.6 }}
+        className="absolute bottom-12 -right-4 hidden w-44 rounded-3xl border border-white/10 bg-zinc-900/90 p-4 shadow-xl backdrop-blur md:block"
+      >
+        <div className="flex items-center gap-3">
+          <Smartphone className="h-8 w-8 text-violet-400" />
+          <div>
+            <div className="text-sm font-medium text-white">Mobile Sync</div>
+            <div className="text-xs text-white/60">Live &bull; 4 devices</div>
+          </div>
+        </div>
+      </motion.div>
     </div>
   );
 }
