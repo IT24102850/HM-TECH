@@ -32,7 +32,7 @@ const config: Config = {
       },
       backgroundImage: {
         "iris-gradient": "linear-gradient(135deg, #6D28D9 0%, #8B5CF6 50%, #A78BFA 100%)",
-        "iris-radial": "radial-gradient(circle at 50% 0%, rgba(139,92,246,0.14), rgba(255,255,255,0) 60%)",
+        "iris-radial": "radial-gradient(circle at center, rgba(139, 92, 246, 0.15) 0%, transparent 70%)",
       },
       boxShadow: {
         iris: "0 20px 60px -15px rgba(109, 40, 217, 0.35)",
