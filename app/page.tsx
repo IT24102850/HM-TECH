@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { ArrowUpRight, ShieldCheck, Sparkles, Wand2 } from "lucide-react";
+import { ArrowUpRight, ShieldCheck, Sparkles, Wand2, Zap, Award, Clock, Code, Users, LifeBuoy } from "lucide-react";
 import CubeField from "@/components/CubeField";
 import SectionHeading from "@/components/SectionHeading";
 import StatsStrip from "@/components/StatsStrip";
@@ -9,6 +9,33 @@ import CTASection from "@/components/CTASection";
 import TechStackGrid from "@/components/TechStackGrid";
 
 import { services } from "./services/page";
+
+const whyChooseUs = [
+  {
+    icon: Code,
+    title: "Custom Software",
+  },
+  {
+    icon: Award,
+    title: "Affordable Pricing",
+  },
+  {
+    icon: Clock,
+    title: "Fast Delivery",
+  },
+  {
+    icon: Zap,
+    title: "Latest Technologies",
+  },
+  {
+    icon: Users,
+    title: "Experienced Team",
+  },
+  {
+    icon: LifeBuoy,
+    title: "Dedicated Support",
+  },
+];
 
 export default function Home() {
   return (
@@ -33,9 +60,6 @@ export default function Home() {
             <div className="mt-9 flex flex-wrap items-center gap-4">
               <Link href="/contact" className="btn-primary">
                 Start a project <ArrowUpRight className="h-4 w-4" />
-              </Link>
-              <Link href="/technologies" className="btn-ghost">
-                Our Tech Stack
               </Link>
             </div>
             <div className="mt-10 flex items-center gap-6 text-xs text-ink/45">
@@ -82,6 +106,25 @@ export default function Home() {
               <h3 className="mt-6 font-display text-lg font-semibold text-ink">{s.title}</h3>
               <p className="mt-2.5 text-sm leading-relaxed text-ink/60">{s.copy}</p>
             </TiltCard>
+          ))}
+        </div>
+      </section>
+
+      {/* WHY CHOOSE US */}
+      <section className="section-py container-px mx-auto max-w-7xl">
+        <SectionHeading
+          eyebrow="Why Choose HMTech?"
+          title="Your Partner in Digital Excellence"
+          align="center"
+        />
+        <div className="mt-12 grid grid-cols-2 gap-6 md:grid-cols-3">
+          {whyChooseUs.map((item) => (
+            <div key={item.title} className="card-surface flex flex-col items-center p-6 text-center">
+              <div className="grid h-14 w-14 place-items-center rounded-full bg-iris-gradient text-white shadow-iris-sm">
+                <item.icon className="h-7 w-7" />
+              </div>
+              <h3 className="mt-5 font-display text-lg font-semibold text-ink">{item.title}</h3>
+            </div>
           ))}
         </div>
       </section>

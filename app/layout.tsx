@@ -30,9 +30,9 @@ export const metadata: Metadata = {
   description:
     "HM Tech designs and engineers premium digital products — from 3D-grade web experiences to full-stack platforms that scale.",
   icons: {
-    icon: "/logo.png",
-    shortcut: "/logo.png",
-    apple: "/logo.png",
+    icon: "/favicon.ico",
+    shortcut: "/favicon.ico",
+    apple: "/logo.png", // Apple devices often use a higher-resolution PNG
   },
 };
 

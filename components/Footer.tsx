@@ -1,24 +1,31 @@
 import Link from "next/link";
 import Image from "next/image";
-import { ArrowUpRight, Github, Linkedin, Twitter } from "lucide-react";
+import { ArrowUpRight, Github, Linkedin, Twitter, Mail, Phone } from "lucide-react";
 
 const columns = [
   {
-    title: "Studio",
+    title: "Company",
     links: [
       { href: "/about", label: "About" },
       { href: "/services", label: "Services" },
       { href: "/technologies", label: "Technologies" },
-      { href: "/contact", label: "Contact" },
     ],
   },
   {
     title: "Services",
     links: [
-      { href: "/services", label: "Product engineering" },
-      { href: "/services", label: "3D & motion design" },
-      { href: "/services", label: "Platform modernization" },
-      { href: "/services", label: "Design systems" },
+      { href: "/services", label: "Software Development" },
+      { href: "/services", label: "Web Development" },
+      { href: "/services", label: "AI & Automation" },
+      { href: "/services", label: "Digital Marketing" },
+    ],
+  },
+  {
+    title: "Quick Links",
+    links: [
+      { href: "/contact", label: "Contact" },
+      { href: "#", label: "Privacy Policy" },
+      { href: "#", label: "Terms of Service" },
     ],
   },
 ];
@@ -27,7 +34,7 @@ export default function Footer() {
   return (
     <footer className="border-t border-iris-100 bg-mist">
       <div className="container-px mx-auto max-w-7xl py-16">
-        <div className="grid grid-cols-1 gap-12 md:grid-cols-[1.3fr_0.7fr_0.7fr_1fr]">
+        <div className="grid grid-cols-1 gap-12 md:grid-cols-[1.3fr_0.7fr_0.7fr_0.7fr_1fr]">
           <div>
             <Image src="/logo.png" alt="HM Tech" width={132} height={68} className="h-9 w-auto" />
             <p className="mt-5 max-w-xs text-sm leading-relaxed text-ink/60">
@@ -64,19 +71,24 @@ export default function Footer() {
           ))}
 
           <div>
-            <p className="eyebrow">Start building</p>
-            <p className="mt-4 text-sm text-ink/70">
-              Have a brief in mind? Tell us about it and we&apos;ll reply within
-              one business day.
-            </p>
-            <Link href="/contact" className="mt-5 inline-flex items-center gap-1.5 text-sm font-semibold text-iris-700">
-              Get in touch <ArrowUpRight className="h-3.5 w-3.5" />
-            </Link>
+            <p className="eyebrow">Contact Us</p>
+            <ul className="mt-4 space-y-3">
+              <li>
+                <a href="mailto:contact@hmtech.com" className="flex items-center gap-2 text-sm text-ink/70 hover:text-iris-700">
+                  <Mail className="h-4 w-4" /> contact@hmtech.com
+                </a>
+              </li>
+              <li>
+                <a href="tel:+1234567890" className="flex items-center gap-2 text-sm text-ink/70 hover:text-iris-700">
+                  <Phone className="h-4 w-4" /> +1 (234) 567-890
+                </a>
+              </li>
+            </ul>
           </div>
         </div>
 
         <div className="mt-14 flex flex-col items-center justify-between gap-4 border-t border-iris-100 pt-8 text-xs text-ink/50 md:flex-row">
-          <p>© {new Date().getFullYear()} HM Tech. All rights reserved.</p>
+          <p>Copyright © {new Date().getFullYear()} HM Tech. All rights reserved.</p>
           <p className="font-mono tracking-wide">INNOVATE. BUILD. TRANSFORM.</p>
         </div>
       </div>
