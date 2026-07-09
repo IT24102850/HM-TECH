@@ -7,9 +7,11 @@ import { ArrowUpRight } from "lucide-react";
 export default function CTASection({
   title = "Have a product that deserves a better build?",
   description = "Tell us where it hurts. We'll come back with a point of view within one business day.",
+  buttonText = "Start a project",
 }: {
   title?: string;
   description?: string;
+  buttonText?: string;
 }) {
   return (
     <section className="section-py container-px mx-auto max-w-7xl">
@@ -33,7 +35,7 @@ export default function CTASection({
           href="/contact"
           className="mt-8 inline-flex items-center gap-2 rounded-full bg-white px-8 py-3.5 text-sm font-semibold text-iris-700 shadow-lg transition-transform hover:scale-[1.03]"
         >
-          Start a project
+          {buttonText}
           <ArrowUpRight className="h-4 w-4" />
         </Link>
       </motion.div>

@@ -44,6 +44,21 @@
   .btn-ghost {
     @apply inline-flex items-center justify-center gap-2 rounded-full border border-iris-200 bg-white px-7 py-3.5 text-sm font-semibold text-ink transition-colors duration-300 hover:border-iris-400 hover:bg-iris-50;
   }
+  .btn-secondary {
+    @apply inline-flex items-center justify-center gap-2 rounded-full border border-iris-200 bg-white px-7 py-3.5 text-sm font-semibold text-ink transition-colors duration-300 hover:border-iris-400 hover:bg-iris-50;
+  }
+}
+
+/* Explicit keyframes so inline `style={{ animation: 'float ...' }}` usages
+   (e.g. HeroVisual) always emit, independent of Tailwind's class-usage scan. */
+@keyframes float {
+  0%,
+  100% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(-14px);
+  }
 }
 
 @media (prefers-reduced-motion: reduce) {

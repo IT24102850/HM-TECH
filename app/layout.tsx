@@ -3,6 +3,8 @@ import { Space_Grotesk, Inter, JetBrains_Mono } from "next/font/google";
 import "./globals.css";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
+import LoadingScreen from "@/components/LoadingScreen";
+import { siteConfig } from "@/lib/site";
 
 const display = Space_Grotesk({
   subsets: ["latin"],
@@ -26,13 +28,47 @@ const mono = JetBrains_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "HM Tech — Innovate. Build. Transform.",
-  description:
-    "HM Tech designs and engineers premium digital products — from 3D-grade web experiences to full-stack platforms that scale.",
+  metadataBase: new URL(siteConfig.url),
+  title: {
+    default: `${siteConfig.name} — ${siteConfig.tagline}`,
+    template: `%s — ${siteConfig.name}`,
+  },
+  description: siteConfig.description,
+  keywords: [
+    "software development",
+    "web development",
+    "mobile app development",
+    "AI solutions",
+    "cloud solutions",
+    "IT consultancy",
+    "HM Tech",
+  ],
+  authors: [{ name: siteConfig.name }],
+  creator: siteConfig.name,
   icons: {
-    icon: "/favicon.ico",
-    shortcut: "/favicon.ico",
-    apple: "/logo.png", // Apple devices often use a higher-resolution PNG
+    icon: [
+      { url: "/favicon_io/favicon-32x32.png", sizes: "32x32", type: "image/png" },
+      { url: "/favicon_io/favicon-16x16.png", sizes: "16x16", type: "image/png" },
+    ],
+    shortcut: "/favicon_io/favicon.ico",
+    apple: "/favicon_io/apple-touch-icon.png",
+  },
+  manifest: "/favicon_io/site.webmanifest",
+  openGraph: {
+    type: "website",
+    url: siteConfig.url,
+    siteName: siteConfig.name,
+    title: `${siteConfig.name} — ${siteConfig.tagline}`,
+    description: siteConfig.description,
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: `${siteConfig.name} — ${siteConfig.tagline}`,
+    description: siteConfig.description,
+  },
+  robots: {
+    index: true,
+    follow: true,
   },
 };
 
@@ -42,6 +78,7 @@ export default function RootLayout({
   return (
     <html lang="en" className={`${display.variable} ${body.variable} ${mono.variable}`}>
       <body className="bg-paper">
+        <LoadingScreen />
         <Navbar />
         <main>{children}</main>
         <Footer />

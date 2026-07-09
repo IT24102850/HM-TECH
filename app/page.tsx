@@ -1,40 +1,24 @@
 import Link from "next/link";
 import { ArrowUpRight, ShieldCheck, Sparkles, Wand2, Zap, Award, Clock, Code, Users, LifeBuoy } from "lucide-react";
-import CubeField from "@/components/CubeField";
+import HeroVisual from "@/components/HeroVisual";
 import SectionHeading from "@/components/SectionHeading";
 import StatsStrip from "@/components/StatsStrip";
 import ProcessTimeline from "@/components/ProcessTimeline";
 import TiltCard from "@/components/TiltCard";
 import CTASection from "@/components/CTASection";
 import TechStackGrid from "@/components/TechStackGrid";
-
-import { services } from "./services/page";
+import FAQSection from "@/components/FAQSection";
+import BlogPreview from "@/components/BlogPreview";
+import { services } from "@/lib/services";
+import { siteConfig } from "@/lib/site";
 
 const whyChooseUs = [
-  {
-    icon: Code,
-    title: "Custom Software",
-  },
-  {
-    icon: Award,
-    title: "Affordable Pricing",
-  },
-  {
-    icon: Clock,
-    title: "Fast Delivery",
-  },
-  {
-    icon: Zap,
-    title: "Latest Technologies",
-  },
-  {
-    icon: Users,
-    title: "Experienced Team",
-  },
-  {
-    icon: LifeBuoy,
-    title: "Dedicated Support",
-  },
+  { icon: Code, title: "Custom Software" },
+  { icon: Award, title: "Affordable Pricing" },
+  { icon: Clock, title: "Fast Delivery" },
+  { icon: Zap, title: "Latest Technologies" },
+  { icon: Users, title: "Experienced Team" },
+  { icon: LifeBuoy, title: "Dedicated Support" },
 ];
 
 export default function Home() {
@@ -46,20 +30,25 @@ export default function Home() {
         <div className="container-px relative mx-auto grid max-w-7xl grid-cols-1 items-center gap-4 pb-8 pt-14 md:grid-cols-2 md:pt-20">
           <div>
             <p className="eyebrow inline-flex items-center gap-2 rounded-full border border-iris-100 bg-white px-3 py-1.5 shadow-iris-sm">
-              <Sparkles className="h-3.5 w-3.5" /> Product &amp; 3D Engineering Studio
+              <Sparkles className="h-3.5 w-3.5" /> {siteConfig.eyebrow}
             </p>
-            <h1 className="mt-6 font-display text-4xl font-semibold leading-[1.08] tracking-tight text-ink sm:text-5xl lg:text-6xl">
-              We build software that feels
-              <span className="text-gradient"> dimensional.</span>
+            <p className="mt-4 font-mono text-xs uppercase tracking-[0.3em] text-iris-500">
+              {siteConfig.tagline}
+            </p>
+            <h1 className="mt-4 font-display text-4xl font-semibold leading-[1.08] tracking-tight text-ink sm:text-5xl lg:text-6xl">
+              Building Digital Solutions for
+              <span className="text-gradient"> Modern Businesses</span>
             </h1>
             <p className="mt-6 max-w-lg text-base leading-relaxed text-ink/60 md:text-lg">
-              HM Tech pairs senior engineers with 3D-native designers to ship
-              premium web products — the kind that make a homepage feel like
-              a demo of what&apos;s next.
+              We design websites, develop software, build AI-powered
+              solutions, and help businesses grow through technology.
             </p>
             <div className="mt-9 flex flex-wrap items-center gap-4">
               <Link href="/contact" className="btn-primary">
-                Start a project <ArrowUpRight className="h-4 w-4" />
+                Get a Free Consultation <ArrowUpRight className="h-4 w-4" />
+              </Link>
+              <Link href="/services" className="btn-ghost">
+                View Our Work
               </Link>
             </div>
             <div className="mt-10 flex items-center gap-6 text-xs text-ink/45">
@@ -74,7 +63,7 @@ export default function Home() {
           </div>
 
           <div className="relative">
-            <CubeField />
+            <HeroVisual />
           </div>
         </div>
       </section>
@@ -99,11 +88,11 @@ export default function Home() {
 
         <div className="mt-12 grid grid-cols-1 gap-6 md:grid-cols-3">
           {services.slice(0, 3).map((s) => (
-            <TiltCard key={s.title}>
-              <div className="grid h-12 w-12 place-items-center rounded-xl bg-iris-gradient text-white shadow-iris-sm">
-                <s.icon className="h-6 w-6" />
+            <TiltCard key={s.title} className="h-full">
+              <div className="grid h-14 w-14 place-items-center rounded-2xl bg-iris-gradient text-white shadow-iris-sm">
+                <s.icon className="h-7 w-7" />
               </div>
-              <h3 className="mt-6 font-display text-lg font-semibold text-ink">{s.title}</h3>
+              <h3 className="mt-6 font-display text-xl font-semibold text-ink">{s.title}</h3>
               <p className="mt-2.5 text-sm leading-relaxed text-ink/60">{s.copy}</p>
             </TiltCard>
           ))}
@@ -178,7 +167,39 @@ export default function Home() {
         </div>
       </section>
 
-      <CTASection />
+      {/* BLOG PREVIEW */}
+      <section className="section-py container-px mx-auto max-w-7xl bg-mist">
+        <div className="flex flex-col items-start justify-between gap-6 md:flex-row md:items-end">
+          <SectionHeading
+            eyebrow="From the blog"
+            title="Ideas worth reading before your next build."
+          />
+          <Link href="/blog" className="hidden shrink-0 items-center gap-1.5 text-sm font-semibold text-iris-700 md:inline-flex">
+            All articles <ArrowUpRight className="h-4 w-4" />
+          </Link>
+        </div>
+        <div className="mt-12">
+          <BlogPreview />
+        </div>
+      </section>
+
+      {/* FAQ */}
+      <section className="section-py container-px mx-auto max-w-7xl">
+        <SectionHeading
+          eyebrow="Questions"
+          title="People always ask"
+          align="center"
+        />
+        <div className="mt-12">
+          <FAQSection />
+        </div>
+      </section>
+
+      <CTASection
+        title="Ready to Transform Your Business?"
+        description="Tell us where it hurts. We'll come back with a point of view within one business day."
+        buttonText="Get Started"
+      />
     </>
   );
 }

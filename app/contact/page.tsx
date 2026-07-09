@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Mail, MapPin, Phone, Clock } from "lucide-react";
 import ContactForm from "@/components/ContactForm";
+import { siteConfig } from "@/lib/site";
 
 export const metadata: Metadata = {
   title: "Contact — HM Tech",
@@ -8,9 +9,9 @@ export const metadata: Metadata = {
 };
 
 const info = [
-  { icon: Mail, label: "Email", value: "hello@hmtech.studio" },
-  { icon: Phone, label: "Phone", value: "+1 (415) 555-0148" },
-  { icon: MapPin, label: "Studio", value: "San Francisco · Remote-first" },
+  { icon: Mail, label: "Email", value: siteConfig.email },
+  { icon: Phone, label: "Phone", value: siteConfig.phone },
+  { icon: MapPin, label: "Studio", value: siteConfig.address },
   { icon: Clock, label: "Response time", value: "Within 1 business day" },
 ];
 
@@ -46,6 +47,17 @@ export default function ContactPage() {
                 </div>
               </div>
             ))}
+            <div className="card-surface p-6">
+              <p className="eyebrow">Business Hours</p>
+              <ul className="mt-4 space-y-2.5">
+                {siteConfig.businessHours.map((row) => (
+                  <li key={row.day} className="flex items-center justify-between text-sm">
+                    <span className="text-ink/60">{row.day}</span>
+                    <span className="font-medium text-ink">{row.hours}</span>
+                  </li>
+                ))}
+              </ul>
+            </div>
             <div className="card-surface p-6">
               <p className="text-sm font-semibold text-ink">Prefer a call first?</p>
               <p className="mt-2 text-sm leading-relaxed text-ink/60">

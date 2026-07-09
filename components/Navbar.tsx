@@ -34,8 +34,14 @@ export default function Navbar() {
   return (
     <header className={`sticky top-0 z-50 transition-all duration-300 ${scrolled ? "bg-white/80 backdrop-blur-xl border-b border-iris-100 shadow-[0_1px_0_rgba(109,40,217,0.06)]" : "bg-white/40 backdrop-blur-sm"}`}>
       <nav className="container-px mx-auto flex max-w-7xl items-center justify-between py-4">
-        <Link href="/" className="flex items-center gap-2.5">
-          <Image src="/logo.png" alt="HM Tech" width={132} height={68} priority className="h-12 w-auto md:h-14" />
+        <Link href="/" className="flex items-center gap-3">
+          <Image src="/logo.png" alt="HM Tech" width={160} height={82} priority className="h-12 w-auto md:h-16" />
+          <span className="hidden flex-col leading-none lg:flex">
+            <span className="font-display text-lg font-semibold tracking-tight text-ink">HM Tech</span>
+            <span className="font-mono text-[10px] uppercase tracking-[0.2em] text-iris-600">
+              Innovate. Build. Transform.
+            </span>
+          </span>
         </Link>
 
         <ul className="hidden items-center gap-9 md:flex">

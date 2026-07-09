@@ -1,83 +1,16 @@
 import type { Metadata } from "next";
-import {
-  ArrowUpRight,
-  Check,
-  Code,
-  Globe,
-  Smartphone,
-  BrainCircuit,
-  Cloud,
-  Network,
-  TrendingUp,
-  Camera,
-  PenTool,
-  Lightbulb,
-  Boxes,
-  Cpu,
-} from "lucide-react";
+import { ArrowUpRight, Check } from "lucide-react";
 import Link from "next/link";
 import TiltCard from "@/components/TiltCard";
 import SectionHeading from "@/components/SectionHeading";
 import ProcessTimeline from "@/components/ProcessTimeline";
 import CTASection from "@/components/CTASection";
+import { services } from "@/lib/services";
 
 export const metadata: Metadata = {
   title: "Services — HM Tech",
   description: "End-to-end product engineering, from strategy and design to development and deployment.",
 };
-
-export const services = [
-  {
-    icon: Code,
-    title: "Software Development",
-    copy: "Custom software solutions built with modern technologies and best practices.",
-  },
-  {
-    icon: Globe,
-    title: "Web Development",
-    copy: "High-performance websites and web applications that deliver exceptional user experiences.",
-  },
-  {
-    icon: Smartphone,
-    title: "Mobile App Development",
-    copy: "Native and cross-platform mobile apps for iOS and Android that users love.",
-  },
-  {
-    icon: BrainCircuit,
-    title: "AI & Automation",
-    copy: "Intelligent automation and AI solutions to streamline processes and boost productivity.",
-  },
-  {
-    icon: Cloud,
-    title: "Cloud Solutions",
-    copy: "Scalable cloud infrastructure and solutions to accelerate business growth.",
-  },
-  {
-    icon: Network,
-    title: "ERP Solutions",
-    copy: "Custom ERP systems to manage and integrate business operations seamlessly.",
-  },
-  {
-    icon: TrendingUp,
-    title: "Digital Marketing",
-    copy: "Data-driven marketing strategies to grow your brand and reach the right audiences.",
-  },
-  {
-    icon: Camera,
-    title: "Cinematography",
-    copy: "Professional video production and visual storytelling to bring your brand's narrative to life.",
-  },
-  {
-    icon: PenTool,
-    title: "UI/UX Design",
-    copy: "Beautiful, intuitive designs that enhance user experience and drive engagement.",
-  },
-  {
-    icon: Lightbulb,
-    title: "IT Consultancy",
-    copy: "Expert guidance and consulting to help you make the right technology decisions.",
-  },
-];
 
 const tiers = [
   {
@@ -121,14 +54,14 @@ export default function ServicesPage() {
       </section>
 
       <section className="section-py container-px mx-auto max-w-7xl">
-        <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
+        <div className="grid grid-cols-1 gap-8 md:grid-cols-2">
           {services.map((s) => (
-            <TiltCard key={s.title}>
-              <div className="grid h-12 w-12 place-items-center rounded-xl bg-iris-gradient text-white shadow-iris-sm">
-                <s.icon className="h-6 w-6" />
+            <TiltCard key={s.title} className="h-full">
+              <div className="grid h-16 w-16 place-items-center rounded-2xl bg-iris-gradient text-white shadow-iris-sm">
+                <s.icon className="h-8 w-8" />
               </div>
-              <h3 className="mt-6 font-display text-lg font-semibold text-ink">{s.title}</h3>
-              <p className="mt-2.5 text-sm leading-relaxed text-ink/60">{s.copy}</p>
+              <h3 className="mt-7 font-display text-2xl font-semibold text-ink">{s.title}</h3>
+              <p className="mt-3 text-base leading-relaxed text-ink/60">{s.copy}</p>
             </TiltCard>
           ))}
         </div>
