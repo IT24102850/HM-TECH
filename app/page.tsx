@@ -35,7 +35,7 @@ export default function Home() {
             <p className="mt-4 font-mono text-xs uppercase tracking-[0.3em] text-iris-500">
               {siteConfig.tagline}
             </p>
-            <h1 className="mt-4 font-display text-4xl font-semibold leading-[1.08] tracking-tight text-ink sm:text-5xl lg:text-6xl">
+            <h1 className="mt-4 font-display text-3xl font-semibold leading-[1.08] tracking-tight text-ink sm:text-5xl lg:text-6xl">
               Building Digital Solutions for
               <span className="text-gradient"> Modern Businesses</span>
             </h1>
@@ -43,7 +43,7 @@ export default function Home() {
               We design websites, develop software, build AI-powered
               solutions, and help businesses grow through technology.
             </p>
-            <div className="mt-9 flex flex-wrap items-center gap-4">
+            <div className="mt-9 flex flex-wrap items-center justify-center gap-4 md:justify-start">
               <Link href="/contact" className="btn-primary">
                 Get a Free Consultation <ArrowUpRight className="h-4 w-4" />
               </Link>
@@ -51,8 +51,8 @@ export default function Home() {
                 View Our Work
               </Link>
             </div>
-            <div className="mt-10 flex items-center gap-6 text-xs text-ink/45">
-              <span className="font-mono tracking-wide">TRUSTED BY TEAMS AT</span>
+            <div className="mt-10 flex flex-col items-center gap-4 text-xs text-ink/45 md:flex-row md:gap-6">
+              <span className="font-mono tracking-wide">TRUSTED BY</span>
               <div className="flex gap-5 font-display text-sm font-semibold text-ink/35">
                 <span>Ledgerline</span>
                 <span>Vitalcare</span>

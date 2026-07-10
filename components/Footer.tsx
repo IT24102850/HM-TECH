@@ -43,9 +43,9 @@ const socialLinks = [
 export default function Footer() {
   return (
     <footer className="border-t border-iris-100 bg-mist">
-      <div className="container-px mx-auto max-w-7xl py-16">
-        <div className="grid grid-cols-1 gap-12 md:grid-cols-[1.3fr_0.7fr_0.7fr_0.7fr_1fr]">
-          <div>
+      <div className="container-px mx-auto max-w-7xl py-16 text-center md:text-left">
+        <div className="grid grid-cols-1 gap-12 md:grid-cols-2 lg:grid-cols-[1.3fr_0.7fr_0.7fr_0.7fr_1fr]">
+          <div className="flex flex-col items-center md:items-start">
             <Image src="/logo.png" alt="HM Tech" width={150} height={78} className="h-11 w-auto" />
             <p className="mt-5 max-w-xs text-sm leading-relaxed text-ink/60">
               {siteConfig.description}
@@ -53,7 +53,7 @@ export default function Footer() {
             <p className="mt-4 font-mono text-xs uppercase tracking-[0.2em] text-iris-600">
               {siteConfig.tagline}
             </p>
-            <div className="mt-6 flex gap-3">
+            <div className="mt-6 flex justify-center gap-3 md:justify-start">
               {socialLinks.map(({ icon: Icon, href, label }) => (
                 <a
                   key={label}
@@ -86,14 +86,14 @@ export default function Footer() {
 
           <div>
             <p className="eyebrow">Contact Us</p>
-            <ul className="mt-4 space-y-3">
+            <ul className="mt-4 flex flex-col items-center space-y-3 md:items-start">
               <li>
-                <a href={`mailto:${siteConfig.email}`} className="flex items-center gap-2 text-sm text-ink/70 hover:text-iris-700">
+                <a href={`mailto:${siteConfig.email}`} className="inline-flex items-center gap-2 text-sm text-ink/70 hover:text-iris-700">
                   <Mail className="h-4 w-4 shrink-0" /> {siteConfig.email}
                 </a>
               </li>
               <li>
-                <a href={`tel:${siteConfig.phoneHref}`} className="flex items-center gap-2 text-sm text-ink/70 hover:text-iris-700">
+                <a href={`tel:${siteConfig.phoneHref}`} className="inline-flex items-center gap-2 text-sm text-ink/70 hover:text-iris-700">
                   <Phone className="h-4 w-4 shrink-0" /> {siteConfig.phone}
                 </a>
               </li>

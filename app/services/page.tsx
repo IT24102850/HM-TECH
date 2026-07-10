@@ -57,11 +57,11 @@ export default function ServicesPage() {
         <div className="grid grid-cols-1 gap-8 md:grid-cols-2">
           {services.map((s) => (
             <TiltCard key={s.title} className="h-full">
-              <div className="grid h-16 w-16 place-items-center rounded-2xl bg-iris-gradient text-white shadow-iris-sm">
-                <s.icon className="h-8 w-8" />
+              <div className="grid h-14 w-14 place-items-center rounded-2xl bg-iris-gradient text-white shadow-iris-sm md:h-16 md:w-16">
+                <s.icon className="h-7 w-7 md:h-8 md:w-8" />
               </div>
-              <h3 className="mt-7 font-display text-2xl font-semibold text-ink">{s.title}</h3>
-              <p className="mt-3 text-base leading-relaxed text-ink/60">{s.copy}</p>
+              <h3 className="mt-6 font-display text-xl font-semibold text-ink md:mt-7 md:text-2xl">{s.title}</h3>
+              <p className="mt-2.5 text-base leading-relaxed text-ink/60 md:mt-3">{s.copy}</p>
             </TiltCard>
           ))}
         </div>

@@ -52,7 +52,7 @@ import { useGLTF, Environment, Html, Sparkles, ContactShadows } from "@react-thr
 import * as THREE from "three";
 import { EffectComposer, Bloom, Vignette } from "@react-three/postprocessing";
 
-const MODEL_PATH = "/models/Hitem3d-1783613677244.glb";
+const MODEL_PATH = "/models/Hitem3d-optimized-v2.glb";
 
 useGLTF.preload(MODEL_PATH);
 
@@ -412,10 +412,8 @@ function LaptopModel({ screenMeshName }: LaptopModelProps) {
         best = child;
       }
     });
-    if (!best) {
-      // If heuristic fails, try common names as a fallback
-      best = (nodes?.Screen || nodes?.display || null) as THREE.Mesh | null;
-    }
+    // If the geometry-based heuristic fails, try common names as a fallback.
+    if (!best) best = (nodes?.Screen || nodes?.display || null) as THREE.Mesh | null;
     if (!best) {
       console.error(
         "HM-TECH: no screen-like mesh found in the model. Check the mesh log above and pass screenMeshName explicitly."
@@ -584,7 +582,7 @@ function Scene({ screenMeshName }: LaptopModelProps) {
 export default function Laptop3D({ screenMeshName }: LaptopModelProps) {
   return (
     <Canvas
-      dpr={[1, 1.8]}
+      dpr={[1, 1.5]}
       camera={{ position: [0, 0.9, 7.4], fov: 34 }}
       gl={{ alpha: true, antialias: true, powerPreference: "high-performance" }}
       shadows

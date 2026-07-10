@@ -56,10 +56,10 @@ export default function TechStackGrid() {
       {technologies.map((tech) => (
         <TiltCard key={tech.name} className="h-full">
           <div className="flex flex-col items-center justify-center p-6">
-            <div className="grid h-16 w-16 place-items-center rounded-2xl bg-white shadow-iris-sm ring-1 ring-iris-100">
-              <tech.icon className="h-8 w-8" style={{ color: tech.color }} />
+            <div className="grid h-14 w-14 place-items-center rounded-2xl bg-white shadow-iris-sm ring-1 ring-iris-100 md:h-16 md:w-16">
+              <tech.icon className="h-7 w-7 md:h-8 md:w-8" style={{ color: tech.color }} />
             </div>
-            <h3 className="mt-4 text-center font-display text-base font-semibold text-ink">
+            <h3 className="mt-4 text-center font-display text-sm font-semibold text-ink md:text-base">
               {tech.name}
             </h3>
           </div>

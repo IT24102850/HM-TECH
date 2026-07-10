@@ -3,26 +3,7 @@
 /**
  * HeroVisual — HM-TECH 3D visual
  * ------------------------------------------------------------------
- * Visual-only: the laptop plus four quiet software-themed elements —
- * a build/deploy status pill, a code editor card, an AI badge, and a
- * synced-device chip — tied together with subtle animated connector
- * lines so it reads as one connected system rather than icons
- * scattered around a laptop. No hero copy — that lives in your own
- * page/section markup, this component just fills its container.
- * Drop it in the right column of a 2-col grid, e.g.:
- *
- *   <section className="grid lg:grid-cols-2 gap-10 items-center">
- *     <div>...hero copy...</div>
- *     <HeroVisual />
- *   </section>
- *
- * Kept deliberately restrained — soft gradients and one glow each,
- * not a "tech demo" look — for a professional, product-photography
- * feel.
- *
- * Required deps already used elsewhere in this project:
- *   framer-motion, lucide-react, @react-three/fiber, @react-three/drei
- * ------------------------------------------------------------------
+ * Visual-only: the laptop plus four quiet software-themed elements...
  */
 
 import { Suspense, useEffect, useState } from "react";
@@ -36,11 +17,7 @@ const Laptop3D = dynamic(() => import("./Laptop3D"), {
   loading: () => <VisualSkeleton />,
 });
 
-// ───────────────────────────────────────────
-// Loading placeholder — shown while the R3F
-// chunk + GLB are fetched. Keeps layout stable
-// instead of a layout-shifting blank box.
-// ───────────────────────────────────────────
+// Loading placeholder
 function VisualSkeleton() {
   return (
     <div
@@ -48,8 +25,7 @@ function VisualSkeleton() {
         width: "100%",
         height: "100%",
         borderRadius: "16px",
-        background:
-          "radial-gradient(circle at 50% 40%, rgba(139,92,246,0.10), transparent 60%), #0a0a0f",
+        background: "radial-gradient(circle at 50% 40%, rgba(120,120,120,0.1), transparent 60%), #0a0a0f",
         display: "flex",
         alignItems: "center",
         justifyContent: "center",
@@ -75,10 +51,7 @@ function VisualSkeleton() {
   );
 }
 
-// ───────────────────────────────────────────
-// Floating code card — "software company" reads
-// clearly through a code editor
-// ───────────────────────────────────────────
+// Floating code card
 const codeLines = [
   "const deploy = async () => {",
   "  await cloud.init({ region: 'global' });",
@@ -102,6 +75,8 @@ function CodeEditorCard({ reduceMotion }: { reduceMotion: boolean }) {
       initial={{ opacity: 0, y: 24, scale: 0.96 }}
       animate={{ opacity: 1, y: 0, scale: 1 }}
       transition={{ delay: 0.55, type: "spring", stiffness: 120, damping: 16 }}
+      suppressHydrationWarning
+      style={{ opacity: 0, transform: "translateY(24px) scale(0.96)" }}
     >
       <div
         style={{
@@ -177,12 +152,7 @@ function CodeEditorCard({ reduceMotion }: { reduceMotion: boolean }) {
   );
 }
 
-// ───────────────────────────────────────────
-// Deploy status card — a CI/deploy pill reading
-// "Build passing". Pairs the code card with a
-// second, distinct piece of dev-tool language
-// instead of two similar-looking widgets.
-// ───────────────────────────────────────────
+// Deploy status card
 function DeployStatusCard({ reduceMotion }: { reduceMotion: boolean }) {
   return (
     <motion.div
@@ -191,6 +161,8 @@ function DeployStatusCard({ reduceMotion }: { reduceMotion: boolean }) {
       animate={{ opacity: 1, y: 0, scale: 1 }}
       whileHover={{ scale: 1.03 }}
       transition={{ delay: 0.7, type: "spring", stiffness: 140, damping: 16 }}
+      suppressHydrationWarning
+      style={{ opacity: 0, transform: "translateY(-18px) scale(0.94)" }}
     >
       <div
         style={{
@@ -258,22 +230,13 @@ function DeployStatusCard({ reduceMotion }: { reduceMotion: boolean }) {
   );
 }
 
-// ───────────────────────────────────────────
-// Connector lines — thin gradient threads from
-// each floating card toward the laptop, with a
-// slow flowing dash to suggest live data sync.
-// This is what turns "icons scattered around a
-// laptop" into "one connected system" visually.
-// ───────────────────────────────────────────
+// ConnectorLines
 function ConnectorLines({ reduceMotion }: { reduceMotion: boolean }) {
-  // Percent-based coordinates in a 0–100 viewBox, roughly matching the
-  // corner positions of the four cards and a shared point near the
-  // laptop's screen. Tune these if you reposition the cards above.
   const paths = [
-    "M 80 17 Q 64 30 51 44", // deploy status card -> laptop
-    "M 20 18 Q 36 32 51 44", // code editor card -> laptop
-    "M 14 84 Q 30 66 45 53", // device chip -> laptop
-    "M 86 82 Q 68 66 55 53", // AI badge -> laptop
+    "M 80 17 Q 64 30 51 44",
+    "M 20 18 Q 36 32 51 44",
+    "M 14 84 Q 30 66 45 53",
+    "M 86 82 Q 68 66 55 53",
   ];
 
   return (
@@ -313,18 +276,14 @@ function ConnectorLines({ reduceMotion }: { reduceMotion: boolean }) {
               ? undefined
               : { delay: 2.2, duration: 2.6, repeat: Infinity, ease: "linear" },
           }}
+          suppressHydrationWarning
         />
       ))}
     </svg>
   );
 }
 
-// ───────────────────────────────────────────
-// AI illustration badge — a restrained circular
-// mark, not a glowing sticker. One soft pulse
-// behind a solid gradient disc reads as "active
-// processing" without looking busy.
-// ───────────────────────────────────────────
+// AIBadge
 function AIBadge({ reduceMotion }: { reduceMotion: boolean }) {
   return (
     <motion.div
@@ -333,6 +292,8 @@ function AIBadge({ reduceMotion }: { reduceMotion: boolean }) {
       animate={{ opacity: 1, y: 0, scale: 1 }}
       whileHover={{ scale: 1.06 }}
       transition={{ delay: 0.85, type: "spring", stiffness: 160, damping: 14 }}
+      suppressHydrationWarning
+      style={{ opacity: 0, transform: "translateY(20px) scale(0.9)" }}
     >
       <div style={{ position: "relative", width: "54px", height: "54px" }}>
         {!reduceMotion && (
@@ -344,7 +305,7 @@ function AIBadge({ reduceMotion }: { reduceMotion: boolean }) {
               position: "absolute",
               inset: 0,
               borderRadius: "9999px",
-              background: `radial-gradient(circle, ${"#8B5CF6"}55, transparent 70%)`,
+              background: `radial-gradient(circle, #8B5CF6 55%, transparent 70%)`,
             }}
           />
         )}
@@ -368,10 +329,7 @@ function AIBadge({ reduceMotion }: { reduceMotion: boolean }) {
   );
 }
 
-// ───────────────────────────────────────────
-// Floating device chip — a secondary device
-// syncing with the dashboard
-// ───────────────────────────────────────────
+// DeviceChip
 function DeviceChip({ reduceMotion }: { reduceMotion: boolean }) {
   return (
     <motion.div
@@ -380,6 +338,8 @@ function DeviceChip({ reduceMotion }: { reduceMotion: boolean }) {
       animate={{ opacity: 1, y: 0, scale: 1 }}
       whileHover={{ scale: 1.08 }}
       transition={{ delay: 1.0, type: "spring", stiffness: 160, damping: 14 }}
+      suppressHydrationWarning
+      style={{ opacity: 0, transform: "translateY(20px) scale(0.9)" }}
     >
       <motion.div
         animate={reduceMotion ? undefined : { y: [0, -6, 0] }}
@@ -402,10 +362,7 @@ function DeviceChip({ reduceMotion }: { reduceMotion: boolean }) {
   );
 }
 
-// ───────────────────────────────────────────
-// Main export — drop this into your existing
-// hero grid's right column, or use full-bleed.
-// ───────────────────────────────────────────
+// Main component
 export default function HeroVisual() {
   const reduceMotion = Boolean(useReducedMotion());
   const [isMounted, setIsMounted] = useState(false);
@@ -419,8 +376,7 @@ export default function HeroVisual() {
     <div
       className="relative w-full h-[340px] sm:h-[440px] lg:h-[600px] overflow-hidden rounded-2xl"
       style={{
-        background:
-          "radial-gradient(120% 90% at 50% 38%, rgba(139,92,246,0.12), rgba(10,10,15,0.4) 55%, #0a0a0f 85%)",
+        background: "radial-gradient(120% 90% at 50% 38%, rgba(120,120,120,0.1), rgba(10,10,15,0.4) 55%, #0a0a0f 85%)",
       }}
     >
       <div className="absolute inset-0">
@@ -429,6 +385,7 @@ export default function HeroVisual() {
         </Suspense>
       </div>
 
+      {/* The floating UI cards are rendered only on the client to prevent hydration errors */}
       {isMounted && (
         <>
           <ConnectorLines reduceMotion={reduceMotion} />
