@@ -2,7 +2,6 @@
 
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import Image from "next/image";
 
 export default function LoadingScreen() {
   const [isLoading, setIsLoading] = useState(true);
@@ -33,7 +32,13 @@ export default function LoadingScreen() {
             className="relative"
           >
             <div className="absolute -inset-4 rounded-full bg-iris-500/10 blur-2xl" />
-            <Image src="/logo.png" alt="HM Tech Logo" width={160} height={82} priority className="relative h-16 w-auto md:h-20" />
+            <motion.div
+              animate={{ rotate: 360 }}
+              transition={{ duration: 0.9, repeat: Infinity, ease: "linear" }}
+              className="relative h-14 w-14 rounded-full border-4 border-iris-200 border-t-iris-600"
+              role="status"
+              aria-label="Loading"
+            />
           </motion.div>
         </motion.div>
       )}
