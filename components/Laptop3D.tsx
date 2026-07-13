@@ -48,7 +48,7 @@
 
 import { Suspense, useEffect, useMemo, useRef, useState } from "react";
 import { Canvas, useFrame, useThree } from "@react-three/fiber";
-import { useGLTF, Environment, Html, Sparkles, ContactShadows } from "@react-three/drei";
+import { useGLTF, Environment, Html, Sparkles, ContactShadows, useProgress } from "@react-three/drei";
 import * as THREE from "three";
 import { EffectComposer, Bloom, Vignette } from "@react-three/postprocessing";
 
@@ -68,6 +68,34 @@ const BRAND = {
   card: "#120C22",
   mint: "#4ADE80",
 };
+
+// ───────────────────────────────────────────
+// Loading screen
+// ───────────────────────────────────────────
+function Loader() {
+  const { active, progress } = useProgress();
+  if (!active) return null;
+  return (
+    <Html center>
+      <div
+        style={{
+          color: BRAND.violetA,
+          fontFamily: "'Inter', -apple-system, sans-serif",
+          fontSize: "14px",
+          fontWeight: 600,
+          whiteSpace: "nowrap",
+          background: "rgba(10, 8, 20, 0.8)",
+          padding: "8px 16px",
+          borderRadius: "6px",
+          border: `1px solid ${BRAND.violetB}`,
+          backdropFilter: "blur(4px)",
+        }}
+      >
+        Loading... {progress.toFixed(0)}%
+      </div>
+    </Html>
+  );
+}
 
 interface ScreenData {
   position: [number, number, number];
@@ -566,7 +594,7 @@ function LaptopModel({ screenMeshName }: LaptopModelProps) {
 // ───────────────────────────────────────────
 function Scene({ screenMeshName }: LaptopModelProps) {
   return (
-    <Suspense fallback={null}>
+    <Suspense fallback={<Loader />}>
       <LaptopModel screenMeshName={screenMeshName} />
       <DataMotes />
       <Sparkles count={50} scale={11} size={0.12} color={BRAND.violetA} opacity={0.22} />
