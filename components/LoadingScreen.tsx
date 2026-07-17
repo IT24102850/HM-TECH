@@ -29,9 +29,18 @@ export default function LoadingScreen() {
             initial={{ scale: 0.8, opacity: 0 }}
             animate={{ scale: 1, opacity: 1 }}
             transition={{ duration: 0.6, ease: "easeOut" }}
-            className="relative"
+            className="relative flex flex-col items-center gap-4"
           >
             <div className="absolute -inset-4 rounded-full bg-iris-500/10 blur-2xl" />
+
+            {/* Logo - now on top */}
+            <img
+              src="/favicon_io/android-chrome-512x512.png"
+              alt="Loading Logo"
+              className="relative z-10 h-12 w-12"
+            />
+
+            {/* Spinner - now below the logo */}
             <motion.div
               animate={{ rotate: 360 }}
               transition={{ duration: 0.9, repeat: Infinity, ease: "linear" }}
