@@ -149,8 +149,6 @@ const POS_Y = -0.05; // small vertical nudge, leaves headroom above for overlays
 const VIEWPORT_FILL = 0.5;
 
 function LaptopImage() {
-  const groupRef = useRef<THREE.Group>(null!);
-  const introStartRef = useRef<number | null>(null);
   const { viewport } = useThree();
 
   // Calculate scale to fit the image within the viewport.
@@ -167,25 +165,8 @@ function LaptopImage() {
     return [viewport.height * imageAspect * VIEWPORT_FILL, viewport.height * VIEWPORT_FILL, 1];
   }, [viewport.width, viewport.height]);
 
-  useFrame((state) => {
-    if (!groupRef.current) return;
-    const t = state.clock.getElapsedTime();
-    const mx = state.pointer.x;
-    const my = state.pointer.y;
-
-    // One-time eased reveal: rises and scales up from a slightly
-    // smaller/lower start instead of popping in at full size.
-    if (introStartRef.current === null) introStartRef.current = t;
-    const introElapsed = t - introStartRef.current;
-    const introDuration = 1.15;
-    const introT = Math.min(introElapsed / introDuration, 1);
-    const eased = 1 - Math.pow(1 - introT, 3); // easeOutCubic
-    groupRef.current.position.y = POS_Y - (1 - eased) * 0.3;
-    groupRef.current.scale.set(scale[0] * eased, scale[1] * eased, scale[2]);
-  });
-
   return (
-    <group ref={groupRef}>
+    <group position-y={POS_Y} scale={scale}>
       <Image url="/lap.png" transparent scale={scale[0]} />
       <ContactShadows position={[0, -0.62, 0]} opacity={0.5} scale={9} blur={2.4} far={2} color="#000000" />
     </group>
