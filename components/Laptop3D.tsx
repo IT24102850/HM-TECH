@@ -166,7 +166,7 @@ function LaptopImage() {
   }, [viewport.width, viewport.height]);
 
   return (
-    <group position-y={POS_Y} scale={scale}>
+    <group position-y={POS_Y} scale={scale as [number, number, number]}>
       <Image url="/lap.png" transparent scale={scale[0]} />
       <ContactShadows position={[0, -0.62, 0]} opacity={0.5} scale={9} blur={2.4} far={2} color="#000000" />
     </group>
