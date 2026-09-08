@@ -1,5 +1,6 @@
 "use client";
 
+<<<<<<< Updated upstream
 import {
   SiReact,
   SiNextdotjs,
@@ -68,3 +69,74 @@ export default function TechStackGrid() {
     </div>
   );
 }
+=======
+import { useMemo, useState } from "react";
+import { motion } from "framer-motion";
+import TiltCard from "@/components/TiltCard";
+import { categories, technologies } from "@/lib/technologies";
+
+type Filter = (typeof categories)[number] | "All";
+
+export default function TechStackGrid() {
+  const [active, setActive] = useState<Filter>("All");
+
+  const filtered = useMemo(
+    () =>
+      active === "All"
+        ? technologies
+        : technologies.filter((t) => t.category === active),
+    [active]
+  );
+
+  return (
+    <div>
+      <div className="flex flex-wrap justify-center gap-2.5">
+        <button
+          onClick={() => setActive("All")}
+          className={`rounded-full border px-4 py-2 text-sm font-medium transition-colors ${
+            active === "All"
+              ? "border-iris-600 bg-iris-gradient text-white shadow-iris-sm"
+              : "border-iris-200 bg-white text-ink/70 hover:border-iris-400"
+          }`}
+        >
+          All
+        </button>
+        {categories.map((c) => (
+          <button
+            key={c}
+            onClick={() => setActive(c)}
+            className={`rounded-full border px-4 py-2 text-sm font-medium transition-colors ${
+              active === c
+                ? "border-iris-600 bg-iris-gradient text-white shadow-iris-sm"
+                : "border-iris-200 bg-white text-ink/70 hover:border-iris-400"
+            }`}
+          >
+            {c}
+          </button>
+        ))}
+      </div>
+
+      <div className="mt-12 grid grid-cols-2 gap-6 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5">
+        {filtered.map((tech) => {
+          const Icon = tech.icon;
+          return (
+            <motion.div
+              key={tech.name}
+              layout
+              initial={{ opacity: 0, y: 16 }}
+              animate={{ opacity: 1, y: 0 }}
+            >
+              <TiltCard>
+                <div className="flex h-full flex-col items-center justify-center gap-4 py-4">
+                  <Icon className="h-10 w-10 text-iris-600" />
+                  <span className="text-sm font-medium text-ink">{tech.name}</span>
+                </div>
+              </TiltCard>
+            </motion.div>
+          );
+        })}
+      </div>
+    </div>
+  );
+}
+>>>>>>> Stashed changes

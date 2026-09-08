@@ -10,7 +10,11 @@ const columns = [
       { href: "/about", label: "About" },
       { href: "/services", label: "Services" },
       { href: "/technologies", label: "Technologies" },
+<<<<<<< Updated upstream
       { href: "/blog", label: "Blog" },
+=======
+      { href: "/contact", label: "Contact" },
+>>>>>>> Stashed changes
     ],
   },
   {
