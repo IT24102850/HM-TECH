@@ -9,12 +9,10 @@ const columns = [
     links: [
       { href: "/about", label: "About" },
       { href: "/services", label: "Services" },
+      { href: "/portfolio", label: "Portfolio" },
       { href: "/technologies", label: "Technologies" },
-<<<<<<< Updated upstream
       { href: "/blog", label: "Blog" },
-=======
       { href: "/contact", label: "Contact" },
->>>>>>> Stashed changes
     ],
   },
   {
@@ -46,7 +44,7 @@ const socialLinks = [
 
 export default function Footer() {
   return (
-    <footer className="border-t border-iris-100 bg-mist">
+    <footer className="border-t border-iris-100 bg-white/[0.02] backdrop-blur-sm">
       <div className="container-px mx-auto max-w-7xl py-16 text-center md:text-left">
         <div className="grid grid-cols-1 gap-12 md:grid-cols-2 lg:grid-cols-[1.3fr_0.7fr_0.7fr_0.7fr_1fr]">
           <div className="flex flex-col items-center md:items-start">
@@ -65,7 +63,7 @@ export default function Footer() {
                   target="_blank"
                   rel="noopener noreferrer"
                   aria-label={label}
-                  className="grid h-9 w-9 place-items-center rounded-full border border-iris-200 text-iris-700 transition-colors hover:bg-iris-100"
+                  className="grid h-9 w-9 place-items-center rounded-full border border-iris-200 text-iris-700 transition-all duration-300 hover:-translate-y-0.5 hover:border-iris-400 hover:bg-iris-50 hover:shadow-iris-sm"
                 >
                   <Icon className="h-4 w-4" />
                 </a>

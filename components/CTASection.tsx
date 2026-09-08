@@ -33,7 +33,7 @@ export default function CTASection({
         </p>
         <Link
           href="/contact"
-          className="mt-8 inline-flex items-center gap-2 rounded-full bg-white px-8 py-3.5 text-sm font-semibold text-iris-700 shadow-lg transition-transform hover:scale-[1.03]"
+          className="mt-8 inline-flex items-center gap-2 rounded-full bg-white px-8 py-3.5 text-sm font-semibold text-[#0A0A12] shadow-lg transition-transform hover:scale-[1.03]"
         >
           {buttonText}
           <ArrowUpRight className="h-4 w-4" />

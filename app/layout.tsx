@@ -1,16 +1,34 @@
 import type { Metadata } from "next";
 import { Space_Grotesk, Inter, JetBrains_Mono } from "next/font/google";
+import localFont from "next/font/local";
 import "./globals.css";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import LoadingScreen from "@/components/LoadingScreen";
+import StageMount from "@/components/cinematic/StageMount";
+import SmoothScroll from "@/components/SmoothScroll";
+import ScrollProgress from "@/components/ScrollProgress";
+import CustomCursor from "@/components/CustomCursor";
 import { siteConfig } from "@/lib/site";
 
 const display = Space_Grotesk({
   subsets: ["latin"],
-  weight: ["500", "600", "700"],
+  weight: ["300", "400", "500", "600"],
   variable: "--font-display",
   display: "swap",
+});
+
+/* High-contrast editorial serif for the large statements. Self-hosted
+   rather than fetched from Google at build time: the font-file fetch was
+   timing out here and taking the dev server down with it. */
+const serif = localFont({
+  src: [
+    { path: "../public/fonts/InstrumentSerif-Regular.woff2", weight: "400", style: "normal" },
+    { path: "../public/fonts/InstrumentSerif-Italic.woff2", weight: "400", style: "italic" },
+  ],
+  variable: "--font-serif",
+  display: "swap",
+  fallback: ["Georgia", "Times New Roman", "serif"],
 });
 
 const body = Inter({
@@ -76,9 +94,13 @@ export default function RootLayout({
   children,
 }: Readonly<{ children: React.ReactNode }>) {
   return (
-    <html lang="en" className={`${display.variable} ${body.variable} ${mono.variable}`}>
-      <body className="bg-paper">
+    <html lang="en" className={`${display.variable} ${serif.variable} ${body.variable} ${mono.variable}`}>
+      <body className="relative bg-transparent">
+        <StageMount />
+        <SmoothScroll />
         <LoadingScreen />
+        <ScrollProgress />
+        <CustomCursor />
         <Navbar />
         <main>{children}</main>
         <Footer />

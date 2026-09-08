@@ -21,7 +21,7 @@ export default function ContactPage() {
       <div className="pointer-events-none absolute inset-0 bg-iris-radial" />
       <div className="container-px relative mx-auto max-w-7xl pb-24 pt-16 md:pt-24">
         <div className="mx-auto max-w-2xl text-center">
-          <p className="eyebrow inline-flex items-center gap-2 rounded-full border border-iris-100 bg-white px-3 py-1.5 shadow-iris-sm">
+          <p className="eyebrow inline-flex items-center gap-2 rounded-full border border-iris-100 bg-white/[0.04] backdrop-blur-xl px-3 py-1.5 shadow-iris-sm">
             Contact
           </p>
           <h1 className="mt-6 font-display text-4xl font-semibold leading-tight tracking-tight text-ink md:text-5xl">

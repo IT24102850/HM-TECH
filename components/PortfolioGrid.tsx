@@ -1,94 +1,124 @@
 "use client";
 
 import { useState } from "react";
-import { ArrowUpRight, Check, Cpu } from "lucide-react";
+import Link from "next/link";
+import { ArrowUpRight, Check } from "lucide-react";
 import { portfolioProjects } from "./portfolioData";
+import Reveal from "./Reveal";
 
-const industries = ["All", ...new Set(portfolioProjects.map((project) => project.industry))];
+const filters = ["All", ...portfolioProjects.map((project) => project.industryShort)];
 
 export default function PortfolioGrid() {
-  const [activeIndustry, setActiveIndustry] = useState("All");
+  const [activeFilter, setActiveFilter] = useState("All");
   const visibleProjects = portfolioProjects.filter(
-    (project) => activeIndustry === "All" || project.industry === activeIndustry,
+    (project) => activeFilter === "All" || project.industryShort === activeFilter,
   );
 
   return (
     <div>
-      <div className="mb-10 flex flex-wrap gap-2" aria-label="Filter portfolio by industry">
-        {industries.map((industry) => (
+      <div className="mb-12 flex flex-wrap gap-2" aria-label="Filter portfolio by industry">
+        {filters.map((filter) => (
           <button
-            key={industry}
+            key={filter}
             type="button"
-            onClick={() => setActiveIndustry(industry)}
-            className={`rounded-full border px-4 py-2 text-sm font-semibold transition-colors ${
-              activeIndustry === industry
-                ? "border-iris-700 bg-iris-700 text-white"
-                : "border-iris-200 bg-white text-ink/65 hover:border-iris-400 hover:text-ink"
+            onClick={() => setActiveFilter(filter)}
+            aria-pressed={activeFilter === filter}
+            className={`rounded-full border px-4 py-2 text-sm font-semibold transition-all duration-300 ${
+              activeFilter === filter
+                ? "border-transparent bg-iris-gradient text-white shadow-iris-sm"
+                : "border-iris-200 bg-white/[0.04] text-ink/60 backdrop-blur-xl hover:border-iris-400 hover:text-ink"
             }`}
           >
-            {industry}
+            {filter}
           </button>
         ))}
       </div>
 
       <div className="grid gap-8 lg:grid-cols-2">
-        {visibleProjects.map((project) => (
-          <article key={project.name} className="card-surface overflow-hidden">
-            <div className={`relative h-64 overflow-hidden bg-gradient-to-br ${project.accent}`}>
-              <img
-                src={project.image}
-                alt={`${project.name} project preview`}
-                className="absolute inset-0 h-full w-full object-cover opacity-0 transition-opacity duration-500"
-                onLoad={(event) => event.currentTarget.classList.add("opacity-100")}
-              />
-              <div className="absolute inset-0 bg-black/10" />
-              <div className="relative flex h-full flex-col justify-between p-7 text-white">
-                <div className="flex items-start justify-between">
-                  <span className="rounded-full border border-white/25 bg-white/10 px-3 py-1 font-mono text-[10px] uppercase tracking-[0.2em] backdrop-blur-sm">
-                    {project.industry}
-                  </span>
-                  <Cpu className="h-6 w-6 text-white/70" />
+        {visibleProjects.map((project, i) => (
+          <Reveal key={project.slug} direction="up" delay={(i % 2) * 0.1} className="h-full">
+            <article className="card-surface group flex h-full flex-col overflow-hidden transition-transform duration-500 hover:-translate-y-2 hover:shadow-iris">
+              {/* The marks are dark artwork on white, so the plate stays light
+                  even on the dark stage — multiply then merges each logo's own
+                  off-white ground into the tint instead of showing a box. */}
+              <div className="relative h-72 overflow-hidden bg-white">
+                <div className={`absolute inset-0 bg-gradient-to-br ${project.accent}`} />
+                <div className="pointer-events-none absolute inset-0 bg-grid opacity-40" />
+                {/* Portrait art needs an explicitly sized box to letterbox
+                    inside; percentage max-* lets tall logos overflow and clip. */}
+                <div className="absolute inset-0 px-6 pb-6 pt-14">
+                  <img
+                    src={project.logo}
+                    alt={`${project.name} logo`}
+                    loading="lazy"
+                    className="h-full w-full object-contain mix-blend-multiply transition-transform duration-700 group-hover:scale-[1.04]"
+                  />
                 </div>
-                <div>
-                  <p className="font-mono text-xs uppercase tracking-[0.2em] text-white/65">{project.tagline}</p>
-                  <h2 className="mt-2 font-display text-4xl font-semibold tracking-tight">{project.name}</h2>
-                </div>
+                <span className="absolute left-5 top-5 rounded-full border border-charcoal/15 bg-white/80 px-3 py-1 font-mono text-[10px] uppercase tracking-[0.2em] text-charcoal backdrop-blur-sm">
+                  {project.industry}
+                </span>
               </div>
-            </div>
 
-            <div className="p-7">
-              <p className="text-sm leading-relaxed text-ink/65">{project.description}</p>
-              <div className="mt-6 grid gap-6 sm:grid-cols-2">
-                <div>
-                  <h3 className="font-mono text-[10px] uppercase tracking-[0.2em] text-iris-600">Services</h3>
-                  <ul className="mt-3 space-y-2 text-sm text-ink/70">
-                    {project.services.map((service) => <li key={service}>{service}</li>)}
-                  </ul>
+              <div className="flex flex-1 flex-col p-7">
+                <p className="font-mono text-[11px] uppercase tracking-[0.2em] text-iris-600">
+                  {project.tagline}
+                </p>
+                <h2 className="mt-2 font-display text-3xl font-semibold tracking-tight text-ink">
+                  {project.name}
+                </h2>
+                <p className="mt-4 text-sm leading-relaxed text-ink/60">{project.description}</p>
+
+                <div className="mt-7 grid gap-6 sm:grid-cols-2">
+                  <div>
+                    <h3 className="font-mono text-[10px] uppercase tracking-[0.2em] text-iris-600">
+                      Services
+                    </h3>
+                    <ul className="mt-3 space-y-2 text-sm text-ink/70">
+                      {project.services.map((service) => (
+                        <li key={service}>{service}</li>
+                      ))}
+                    </ul>
+                  </div>
+                  <div>
+                    <h3 className="font-mono text-[10px] uppercase tracking-[0.2em] text-iris-600">
+                      Technology
+                    </h3>
+                    <div className="mt-3 flex flex-wrap gap-2">
+                      {project.technology.map((technology) => (
+                        <span
+                          key={technology}
+                          className="rounded-md bg-iris-50 px-2.5 py-1 text-xs font-medium text-iris-800"
+                        >
+                          {technology}
+                        </span>
+                      ))}
+                    </div>
+                  </div>
                 </div>
-                <div>
-                  <h3 className="font-mono text-[10px] uppercase tracking-[0.2em] text-iris-600">Technology</h3>
-                  <div className="mt-3 flex flex-wrap gap-2">
-                    {project.technology.map((technology) => (
-                      <span key={technology} className="rounded-md bg-iris-50 px-2.5 py-1 text-xs font-medium text-iris-800">{technology}</span>
+
+                <div className="mt-6 border-t border-iris-100 pt-5">
+                  <h3 className="font-mono text-[10px] uppercase tracking-[0.2em] text-iris-600">
+                    Key features
+                  </h3>
+                  <div className="mt-3 flex flex-wrap gap-x-4 gap-y-2">
+                    {project.features.map((feature) => (
+                      <span key={feature} className="inline-flex items-center gap-1.5 text-xs text-ink/60">
+                        <Check className="h-3.5 w-3.5 shrink-0 text-iris-600" /> {feature}
+                      </span>
                     ))}
                   </div>
                 </div>
+
+                <Link
+                  href="/contact"
+                  className="mt-auto inline-flex items-center gap-2 pt-7 text-sm font-semibold text-iris-700 transition-colors hover:text-iris-900"
+                >
+                  Build something like {project.name}
+                  <ArrowUpRight className="h-4 w-4 transition-transform duration-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
+                </Link>
               </div>
-              <div className="mt-6 border-t border-iris-100 pt-5">
-                <h3 className="font-mono text-[10px] uppercase tracking-[0.2em] text-iris-600">Key features</h3>
-                <div className="mt-3 flex flex-wrap gap-x-4 gap-y-2">
-                  {project.features.map((feature) => (
-                    <span key={feature} className="inline-flex items-center gap-1.5 text-xs text-ink/60">
-                      <Check className="h-3.5 w-3.5 text-iris-600" /> {feature}
-                    </span>
-                  ))}
-                </div>
-              </div>
-              <button type="button" className="mt-7 inline-flex items-center gap-2 text-sm font-semibold text-iris-700 transition-colors hover:text-iris-900">
-                Explore project <ArrowUpRight className="h-4 w-4" />
-              </button>
-            </div>
-          </article>
+            </article>
+          </Reveal>
         ))}
       </div>
     </div>

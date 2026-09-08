@@ -9,7 +9,7 @@ export const metadata = {
 export default function PortfolioPage() {
   return (
     <main>
-      <section className="relative overflow-hidden bg-mist">
+      <section className="relative overflow-hidden bg-white/[0.02] backdrop-blur-sm">
         <div className="pointer-events-none absolute inset-0 bg-iris-radial" />
         <div className="container-px relative mx-auto max-w-7xl py-20 md:py-28">
           <SectionHeading

@@ -1,227 +1,375 @@
 "use client";
 
 /**
- * Laptop3D — HM-TECH hero centerpiece
+ * Laptop3D - the hero centrepiece, built as real 3D geometry.
  * ------------------------------------------------------------------
- * Pure 3D scene: model, screen dashboard, ambient particles, floor.
- * No page layout, no floating HTML overlays — those live in
- * HeroVisual.tsx so this file can be reused anywhere (about page,
- * case study headers, etc).
+ * The old version drew a flat PNG on a plane inside a Canvas, so it read as
+ * a picture rather than an object. This is a procedural machine: a milled
+ * aluminium base, a hinged lid, and a live screen whose dashboard is painted
+ * into a canvas texture at runtime, so nothing is downloaded and nothing can
+ * 404.
  *
- * Fixes vs. the previous version:
- *  - Removed the orbiting torus rings. At near-edge-on angles with
- *    Bloom on, thin large-radius wireframes read as long streaks
- *    across the frame — that was the "purple circles" artifact.
- *  - The screen Html panel was positioned with WORLD-space
- *    coordinates (getWorldPosition/getWorldQuaternion) while living
- *    inside a group that already has its own scale + center offset
- *    applied. That's a coordinate-space mismatch — the panel (and
- *    the glow plane) were rendering far from where the screen mesh
- *    actually is. Fixed by computing the screen's transform relative
- *    to the model root instead, which is correct no matter how deep
- *    it's nested and no matter what the outer groups are doing.
- *  - Bounds/scale/screen-data used to go through useState inside a
- *    useEffect, so the very first frame (and any frame before that
- *    state landed) rendered with the wrong scale/position — this is
- *    why the model looked cropped/misplaced. Now computed with
- *    useMemo directly from the loaded scene, so it's correct from
- *    frame one and never stale.
- *  - Scale is no longer a hardcoded "fitBox" guess. It's derived
- *    from the model's real bounding sphere vs. the camera's actual
- *    visible viewport, with a margin — so the full laptop fits
- *    on screen regardless of this particular model's dimensions.
- *  - Removed the MeshReflectorMaterial floor plane. It's a literal
- *    flat gray disc that met the fog/background at a hard, unlit
- *    seam — that was the "gray background band" artifact.
- *    ContactShadows still grounds the laptop (it renders a shadow
- *    blob only, no visible plane), and the backdrop is now a CSS
- *    radial gradient behind the transparent canvas instead of 3D
- *    geometry, so there's nothing for a seam to form against.
- *  - Added a short eased scale/rise reveal on mount instead of the
- *    laptop just appearing at full size instantly.
- *  - lap.png was re-cropped to an isolated, square (1024x1024) shot
- *    of just the laptop — no surrounding cloud/phone/AI/shield
- *    icons — so imageAspect is now 1 instead of 1024/834. Using the
- *    old 1024/834 ratio against the new square asset would stretch
- *    the laptop vertically.
+ * Tuned for a LIGHT page: a pale aluminium shell, white key lighting and a
+ * soft contact shadow to ground it. No bloom or vignette, which on white
+ * would only wash the page out. Contrast comes from the dark screen against
+ * the light body, the way a real laptop looks on a white desk.
  *
- * Model path: /public/models/Hitem3d-1783613677244.glb
- * Required deps: three, @react-three/fiber, @react-three/drei,
- * @react-three/postprocessing
+ * Interaction:
+ *   - drag to orbit within a clamped range (PresentationControls)
+ *   - idle auto-float and a slow hover bob
+ *   - a scan bar sweeps the display and the screen brightness breathes
+ *   - pastel shards trace a slow ring around the device
  * ------------------------------------------------------------------
  */
+
 import { Suspense, useMemo, useRef } from "react";
-import { Canvas, useFrame, useThree } from "@react-three/fiber";
-import { useGLTF, Environment, Sparkles, ContactShadows, Image } from "@react-three/drei";
+import { Canvas, useFrame } from "@react-three/fiber";
+import {
+  ContactShadows,
+  Float,
+  PresentationControls,
+  Sparkles,
+} from "@react-three/drei";
 import * as THREE from "three";
-import { EffectComposer, Bloom, Vignette } from "@react-three/postprocessing";
 
-const MODEL_PATH = "/models/Hitem3d-optimized-v2.glb";
-
-useGLTF.preload(MODEL_PATH);
-
-// ───────────────────────────────────────────
-// Brand tokens (kept in one place so the 3D
-// material tinting and the HTML dashboard
-// never drift apart)
-// ───────────────────────────────────────────
 const BRAND = {
-  violetA: "#8B5CF6",
-  violetB: "#6D28D9",
-  void_: "#0A0A0F",
-  card: "#120C22",
+  violet: "#8B5CF6",
+  deep: "#6D28D9",
+  soft: "#BDA5F6",
+  pale: "#D8CBFB",
   mint: "#4ADE80",
+  cyan: "#22D3EE",
+  shell: "#E6E1F4", // pale aluminium
+  shellDark: "#CFC6E8",
+  bezel: "#2A2440",
 };
 
-interface ScreenData {
-  position: [number, number, number];
-  rotation: [number, number, number];
-  width: number;
-  height: number;
+/* Screen content, painted once into a canvas texture */
+function useScreenTexture() {
+  return useMemo(() => {
+    const w = 1024;
+    const h = 640;
+    const canvas = document.createElement("canvas");
+    canvas.width = w;
+    canvas.height = h;
+    const ctx = canvas.getContext("2d");
+    if (!ctx) return null;
+
+    // backdrop
+    const bg = ctx.createLinearGradient(0, 0, w, h);
+    bg.addColorStop(0, "#140F2E");
+    bg.addColorStop(0.55, "#1D1442");
+    bg.addColorStop(1, "#120E28");
+    ctx.fillStyle = bg;
+    ctx.fillRect(0, 0, w, h);
+
+    // faint grid
+    ctx.strokeStyle = "rgba(167,139,250,0.16)";
+    ctx.lineWidth = 1;
+    for (let x = 0; x <= w; x += 48) {
+      ctx.beginPath();
+      ctx.moveTo(x, 0);
+      ctx.lineTo(x, h);
+      ctx.stroke();
+    }
+    for (let y = 0; y <= h; y += 48) {
+      ctx.beginPath();
+      ctx.moveTo(0, y);
+      ctx.lineTo(w, y);
+      ctx.stroke();
+    }
+
+    // window chrome
+    ctx.fillStyle = "rgba(255,255,255,0.06)";
+    ctx.fillRect(0, 0, w, 56);
+    const dots = ["#FF5F57", "#FEBC2E", "#28C840"];
+    dots.forEach((c, i) => {
+      ctx.beginPath();
+      ctx.arc(38 + i * 30, 28, 9, 0, Math.PI * 2);
+      ctx.fillStyle = c;
+      ctx.fill();
+    });
+    ctx.fillStyle = "rgba(255,255,255,0.7)";
+    ctx.font = "500 22px ui-monospace, Menlo, monospace";
+    ctx.fillText("hmtech / build.ts", 150, 36);
+
+    // sidebar
+    ctx.fillStyle = "rgba(255,255,255,0.04)";
+    ctx.fillRect(0, 56, 190, h - 56);
+    for (let i = 0; i < 7; i++) {
+      ctx.fillStyle = i === 1 ? "rgba(167,139,250,0.85)" : "rgba(255,255,255,0.18)";
+      ctx.fillRect(28, 104 + i * 46, 12, 12);
+      ctx.fillStyle = i === 1 ? "rgba(255,255,255,0.92)" : "rgba(255,255,255,0.3)";
+      ctx.fillRect(56, 106 + i * 46, 92 - (i % 3) * 18, 9);
+    }
+
+    // code lines
+    const palette = [
+      "rgba(167,139,250,0.95)",
+      "rgba(34,211,238,0.85)",
+      "rgba(255,255,255,0.6)",
+      "rgba(74,222,128,0.85)",
+    ];
+    let y = 112;
+    for (let i = 0; i < 9; i++) {
+      let x = 226;
+      const chunks = 2 + (i % 4);
+      for (let c = 0; c < chunks; c++) {
+        const len = 60 + ((i * 37 + c * 53) % 150);
+        ctx.fillStyle = palette[(i + c) % palette.length];
+        ctx.fillRect(x, y, len, 10);
+        x += len + 18;
+      }
+      y += 30;
+    }
+
+    // metric cards
+    const cards = [
+      { label: "UPTIME", value: "99.98%", color: BRAND.mint },
+      { label: "BUILD", value: "PASSING", color: BRAND.cyan },
+      { label: "DEPLOYS", value: "142", color: BRAND.soft },
+    ];
+    cards.forEach((card, i) => {
+      const cx = 226 + i * 258;
+      const cy = 400;
+      ctx.fillStyle = "rgba(255,255,255,0.07)";
+      ctx.strokeStyle = "rgba(255,255,255,0.14)";
+      ctx.lineWidth = 2;
+      ctx.beginPath();
+      ctx.roundRect(cx, cy, 232, 160, 18);
+      ctx.fill();
+      ctx.stroke();
+
+      ctx.fillStyle = "rgba(255,255,255,0.5)";
+      ctx.font = "500 18px ui-monospace, Menlo, monospace";
+      ctx.fillText(card.label, cx + 22, cy + 42);
+
+      ctx.fillStyle = card.color;
+      ctx.font = "700 44px Inter, system-ui, sans-serif";
+      ctx.fillText(card.value, cx + 22, cy + 100);
+
+      // sparkline
+      ctx.strokeStyle = card.color;
+      ctx.globalAlpha = 0.75;
+      ctx.lineWidth = 3;
+      ctx.beginPath();
+      for (let p = 0; p <= 8; p++) {
+        const px = cx + 22 + p * 24;
+        const py = cy + 138 - Math.abs(Math.sin(p * 1.3 + i)) * 26;
+        if (p === 0) {
+          ctx.moveTo(px, py);
+        } else {
+          ctx.lineTo(px, py);
+        }
+      }
+      ctx.stroke();
+      ctx.globalAlpha = 1;
+    });
+
+    const tex = new THREE.CanvasTexture(canvas);
+    tex.colorSpace = THREE.SRGBColorSpace;
+    tex.anisotropy = 4;
+    return tex;
+  }, []);
 }
 
-// ───────────────────────────────────────────
-// Ambient data-mote particles
-// ───────────────────────────────────────────
-function DataMotes() {
-  const ref = useRef<THREE.Points>(null!);
-  const count = 900;
-
-  const { positions, colors } = useMemo(() => {
-    const positions = new Float32Array(count * 3);
-    const colors = new Float32Array(count * 3);
-    const palette = [new THREE.Color(BRAND.violetA), new THREE.Color(BRAND.violetB)];
-    for (let i = 0; i < count; i++) {
-      const i3 = i * 3;
-      positions[i3] = (Math.random() - 0.5) * 26;
-      positions[i3 + 1] = (Math.random() - 0.5) * 16;
-      positions[i3 + 2] = (Math.random() - 0.5) * 26;
-      const c = palette[Math.floor(Math.random() * palette.length)];
-      colors[i3] = c.r;
-      colors[i3 + 1] = c.g;
-      colors[i3 + 2] = c.b;
-    }
-    return { positions, colors };
-  }, []);
+/* The device */
+function Device() {
+  const screenTex = useScreenTexture();
+  const root = useRef<THREE.Group>(null!);
+  const scan = useRef<THREE.Mesh>(null!);
+  const screenMat = useRef<THREE.MeshStandardMaterial>(null!);
 
   useFrame((state) => {
-    if (!ref.current) return;
     const t = state.clock.getElapsedTime();
-    const arr = ref.current.geometry.attributes.position.array as Float32Array;
-    for (let i = 0; i < count; i++) {
-      const i3 = i * 3;
-      arr[i3 + 1] -= 0.012 + Math.sin(t + i) * 0.003;
-      arr[i3] += Math.sin(t * 0.4 + i * 0.01) * 0.0015;
-      if (arr[i3 + 1] < -7) {
-        arr[i3 + 1] = 7;
-        arr[i3] = (Math.random() - 0.5) * 26;
-        arr[i3 + 2] = (Math.random() - 0.5) * 26;
-      }
+
+    if (root.current) {
+      root.current.position.y = Math.sin(t * 0.7) * 0.05;
     }
-    ref.current.geometry.attributes.position.needsUpdate = true;
+    if (scan.current) {
+      // sweep the scan bar down the display, then wrap
+      const p = (t * 0.35) % 1;
+      scan.current.position.y = 0.62 - p * 1.24;
+      const m = scan.current.material as THREE.MeshBasicMaterial;
+      m.opacity = 0.14 * Math.sin(p * Math.PI);
+    }
+    if (screenMat.current) {
+      screenMat.current.emissiveIntensity = 0.72 + Math.sin(t * 1.6) * 0.06;
+    }
   });
 
   return (
-    <points ref={ref}>
-      <bufferGeometry>
-        <bufferAttribute attach="attributes-position" count={count} array={positions} itemSize={3} />
-        <bufferAttribute attach="attributes-color" count={count} array={colors} itemSize={3} />
-      </bufferGeometry>
-      <pointsMaterial
-        size={0.05}
-        transparent
-        opacity={0.4}
-        vertexColors
-        sizeAttenuation
-        depthWrite={false}
-        blending={THREE.AdditiveBlending}
-      />
-    </points>
-  );
-}
+    <group ref={root} rotation={[0.06, 0, 0]}>
+      {/* base */}
+      <mesh position={[0, -0.42, 0.62]} castShadow receiveShadow>
+        <boxGeometry args={[2.9, 0.1, 1.95]} />
+        <meshStandardMaterial color={BRAND.shell} metalness={0.55} roughness={0.34} />
+      </mesh>
 
-// ───────────────────────────────────────────
-// Product-shot pose. Tune these — this is the
-// knob set you want, not the framing math
-// further down (that part is now automatic).
-// ───────────────────────────────────────────
-const POS_Y = -0.05; // small vertical nudge, leaves headroom above for overlays
-const VIEWPORT_FILL = 0.5;
+      {/* keyboard well */}
+      <mesh position={[0, -0.365, 0.55]} receiveShadow>
+        <boxGeometry args={[2.5, 0.02, 1.32]} />
+        <meshStandardMaterial color={BRAND.shellDark} metalness={0.35} roughness={0.6} />
+      </mesh>
 
-function LaptopImage() {
-  const { viewport } = useThree();
+      {/* trackpad */}
+      <mesh position={[0, -0.362, 1.33]}>
+        <boxGeometry args={[0.95, 0.02, 0.5]} />
+        <meshStandardMaterial color="#DDD5F0" metalness={0.3} roughness={0.45} />
+      </mesh>
 
-  // Calculate scale to fit the image within the viewport.
-  // lap.png is now a square (1024x1024) crop of just the laptop,
-  // so imageAspect is 1 — no more stretching from the old 1024/834 guess.
-  const scale = useMemo(() => {
-    // Image is now square (1024x1024), so aspect ratio is 1
-    const imageAspect = 1;
-    const screenAspect = viewport.width / viewport.height;
+      {/* hinge */}
+      <mesh position={[0, -0.4, -0.32]} rotation={[0, 0, Math.PI / 2]}>
+        <cylinderGeometry args={[0.07, 0.07, 2.85, 24]} />
+        <meshStandardMaterial color={BRAND.shellDark} metalness={0.6} roughness={0.3} />
+      </mesh>
 
-    if (imageAspect > screenAspect) {
-      return [viewport.width * VIEWPORT_FILL, (viewport.width / imageAspect) * VIEWPORT_FILL, 1];
-    }
-    return [viewport.height * imageAspect * VIEWPORT_FILL, viewport.height * VIEWPORT_FILL, 1];
-  }, [viewport.width, viewport.height]);
+      {/* lid */}
+      <group position={[0, -0.4, -0.32]} rotation={[-0.32, 0, 0]}>
+        {/* lid shell */}
+        <mesh position={[0, 0.92, -0.05]} castShadow>
+          <boxGeometry args={[2.9, 1.88, 0.08]} />
+          <meshStandardMaterial color={BRAND.shell} metalness={0.55} roughness={0.32} />
+        </mesh>
 
-  return (
-    <group position-y={POS_Y} scale={scale as [number, number, number]}>
-      <Image url="/lap.png" transparent scale={scale[0]} />
-      <ContactShadows position={[0, -0.62, 0]} opacity={0.5} scale={9} blur={2.4} far={2} color="#000000" />
+        {/* bezel */}
+        <mesh position={[0, 0.92, 0.001]}>
+          <planeGeometry args={[2.78, 1.78]} />
+          <meshStandardMaterial color={BRAND.bezel} roughness={0.6} metalness={0.2} />
+        </mesh>
+
+        {/* display */}
+        <mesh position={[0, 0.92, 0.006]}>
+          <planeGeometry args={[2.62, 1.62]} />
+          <meshStandardMaterial
+            ref={screenMat}
+            map={screenTex ?? undefined}
+            emissiveMap={screenTex ?? undefined}
+            emissive="#ffffff"
+            emissiveIntensity={0.75}
+            toneMapped={false}
+            roughness={0.28}
+            metalness={0}
+          />
+        </mesh>
+
+        {/* scan bar */}
+        <mesh ref={scan} position={[0, 0.92, 0.012]}>
+          <planeGeometry args={[2.62, 0.34]} />
+          <meshBasicMaterial
+            color={BRAND.soft}
+            transparent
+            opacity={0.1}
+            depthWrite={false}
+          />
+        </mesh>
+      </group>
     </group>
   );
 }
 
-// ───────────────────────────────────────────
-// Scene assembly
-// ───────────────────────────────────────────
+/* Shards orbiting the device */
+function OrbitShards() {
+  const ring = useRef<THREE.Group>(null!);
+
+  useFrame((state) => {
+    if (ring.current) ring.current.rotation.y = state.clock.getElapsedTime() * 0.28;
+  });
+
+  const items = useMemo(
+    () =>
+      Array.from({ length: 7 }, (_, i) => {
+        const a = (i / 7) * Math.PI * 2;
+        return {
+          position: [Math.cos(a) * 2.9, Math.sin(a * 2) * 0.6 + 0.2, Math.sin(a) * 2.9] as [
+            number,
+            number,
+            number
+          ],
+          scale: 0.11 + (i % 3) * 0.05,
+        };
+      }),
+    []
+  );
+
+  return (
+    <group ref={ring}>
+      {items.map((it, i) => (
+        <Float key={i} speed={1.2} rotationIntensity={2} floatIntensity={1.2}>
+          <mesh position={it.position} scale={it.scale} castShadow>
+            {i % 3 === 0 ? (
+              <sphereGeometry args={[1, 24, 24]} />
+            ) : i % 3 === 1 ? (
+              <octahedronGeometry args={[1.1, 0]} />
+            ) : (
+              <boxGeometry args={[1.3, 1.3, 1.3]} />
+            )}
+            <meshStandardMaterial
+              color={i % 2 === 0 ? BRAND.violet : BRAND.pale}
+              roughness={0.32}
+              metalness={0.15}
+            />
+          </mesh>
+        </Float>
+      ))}
+    </group>
+  );
+}
+
 function Scene() {
   return (
     <Suspense fallback={null}>
-      <LaptopImage />
-      <DataMotes />
-      <Sparkles count={50} scale={11} size={0.12} color={BRAND.violetA} opacity={0.22} />
-      <Environment preset="city" background={false} />
-      <EffectComposer>
-        <Bloom luminanceThreshold={0.4} luminanceSmoothing={0.9} height={300} intensity={0.3} />
-        <Vignette eskil={false} offset={0.25} darkness={0.4} />
-      </EffectComposer>
+      <PresentationControls
+        global
+        cursor
+        snap
+        speed={1.2}
+        zoom={1}
+        rotation={[0.08, -0.25, 0]}
+        polar={[-0.25, 0.35]}
+        azimuth={[-0.7, 0.7]}
+        config={{ mass: 1.1, tension: 180, friction: 26 }}
+      >
+        <Float speed={1.1} rotationIntensity={0.25} floatIntensity={0.55}>
+          <group scale={1.02}>
+            <Device />
+            <OrbitShards />
+          </group>
+        </Float>
+      </PresentationControls>
+
+      <ContactShadows
+        position={[0, -0.98, 0.4]}
+        opacity={0.32}
+        scale={11}
+        blur={2.8}
+        far={3}
+        color={BRAND.deep}
+      />
+      <Sparkles count={40} scale={8} size={1.4} speed={0.35} color={BRAND.violet} opacity={0.35} />
     </Suspense>
   );
 }
 
-interface Laptop3DProps {
-  /** This prop is no longer used but kept for API compatibility. */
-  screenMeshName?: string;
-}
-
-export default function Laptop3D({ screenMeshName }: Laptop3DProps) {
+export default function Laptop3D() {
   return (
     <Canvas
-      dpr={[1, 1.5]}
-      camera={{ position: [0, 0.9, 7.4], fov: 34 }}
+      dpr={[1, 1.6]}
+      camera={{ position: [0, 0.55, 5.6], fov: 36 }}
       gl={{ alpha: true, antialias: true, powerPreference: "high-performance" }}
       shadows
       style={{ width: "100%", height: "100%" }}
     >
-      {/* No <color attach="background">: the canvas stays transparent so the
-          CSS radial gradient on the wrapping div in HeroVisual shows through.
-          That's the "backdrop" now — no 3D floor/background plane to seam
-          against. Fog still uses the same void tone so particles and the
-          model itself fade into it at a distance, matching the CSS. */}
-      <fog attach="fog" args={[BRAND.void_, 10, 22]} />
-
-      <ambientLight intensity={0.45} />
+      <ambientLight intensity={1.1} />
       <directionalLight
-        position={[6, 10, 8]}
-        intensity={1.8}
+        position={[5, 8, 6]}
+        intensity={2.4}
+        color="#ffffff"
         castShadow
-        color="#C4B5FD"
         shadow-mapSize={[1024, 1024]}
       />
-      <directionalLight position={[-6, -2, -8]} intensity={0.6} color={BRAND.violetB} />
-      <directionalLight position={[0, 1.2, 6]} intensity={0.45} color="#ffffff" />
+      <directionalLight position={[-5, 2, 4]} intensity={0.8} color={BRAND.soft} />
+      <hemisphereLight args={["#ffffff", BRAND.pale, 0.8]} />
 
       <Scene />
     </Canvas>

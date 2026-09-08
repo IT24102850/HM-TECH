@@ -1,11 +1,7 @@
 import type { Metadata } from "next";
-<<<<<<< Updated upstream
 import { ArrowUpRight, Check } from "lucide-react";
 import Link from "next/link";
 import TiltCard from "@/components/TiltCard";
-=======
-import { Check } from "lucide-react";
->>>>>>> Stashed changes
 import SectionHeading from "@/components/SectionHeading";
 import ProcessTimeline from "@/components/ProcessTimeline";
 import CTASection from "@/components/CTASection";
@@ -16,7 +12,6 @@ export const metadata: Metadata = {
   description: "End-to-end product engineering, from strategy and design to development and deployment.",
 };
 
-<<<<<<< Updated upstream
 const tiers = [
   {
     name: "Staff Augmentation",
@@ -36,32 +31,6 @@ const tiers = [
     price: "Fixed Scope",
     features: ["End-to-end build, launch & handoff", "Fixed timeline & budget", "Perfect for new products or MVPs"],
     cta: "Start a project",
-=======
-const engagements = [
-  {
-    name: "Sprint",
-    price: "From $18k",
-    period: "/ 4-week engagement",
-    copy: "A focused build to validate one product surface fast.",
-    features: ["1 designer + 1 engineer", "Working prototype in week 2", "Production-ready by week 4"],
-    highlighted: false,
-  },
-  {
-    name: "Studio",
-    price: "From $42k",
-    period: "/ month",
-    copy: "An embedded team shipping your roadmap continuously.",
-    features: ["Full product pod (design + eng)", "Weekly releases", "Direct Slack access to the team", "Quarterly roadmap planning"],
-    highlighted: true,
-  },
-  {
-    name: "Platform",
-    price: "Custom",
-    period: "/ scoped",
-    copy: "Large-scale modernization or multi-product builds.",
-    features: ["Multiple pods across workstreams", "Dedicated tech lead", "Infra & security review", "SLA-backed support"],
-    highlighted: false,
->>>>>>> Stashed changes
   },
 ];
 
@@ -71,7 +40,7 @@ export default function ServicesPage() {
       <section className="relative overflow-hidden">
         <div className="pointer-events-none absolute inset-0 bg-iris-radial" />
         <div className="container-px relative mx-auto max-w-4xl pb-6 pt-16 text-center md:pt-24">
-          <p className="eyebrow inline-flex items-center gap-2 rounded-full border border-iris-100 bg-white px-3 py-1.5 shadow-iris-sm">
+          <p className="eyebrow inline-flex items-center gap-2 rounded-full border border-iris-100 bg-white/[0.04] backdrop-blur-xl px-3 py-1.5 shadow-iris-sm">
             Our Services
           </p>
           <h1 className="mt-6 font-display text-4xl font-semibold leading-tight tracking-tight text-ink md:text-5xl">
@@ -91,29 +60,14 @@ export default function ServicesPage() {
               <div className="grid h-14 w-14 place-items-center rounded-2xl bg-iris-gradient text-white shadow-iris-sm md:h-16 md:w-16">
                 <s.icon className="h-7 w-7 md:h-8 md:w-8" />
               </div>
-<<<<<<< Updated upstream
               <h3 className="mt-6 font-display text-xl font-semibold text-ink md:mt-7 md:text-2xl">{s.title}</h3>
               <p className="mt-2.5 text-base leading-relaxed text-ink/60 md:mt-3">{s.copy}</p>
-=======
-              <h3 className="mt-6 font-display text-lg font-semibold text-ink">{s.title}</h3>
-              <p className="mt-2.5 text-sm leading-relaxed text-ink/60">{s.description}</p>
-              {s.points && (
-                <ul className="mt-5 space-y-2.5 border-t border-iris-100 pt-5">
-                  {s.points.map((p) => (
-                    <li key={p} className="flex items-start gap-2.5 text-sm text-ink/70">
-                      <Check className="mt-0.5 h-4 w-4 shrink-0 text-iris-600" />
-                      {p}
-                    </li>
-                  ))}
-                </ul>
-              )}
->>>>>>> Stashed changes
             </TiltCard>
           ))}
         </div>
       </section>
 
-      <section className="section-py container-px mx-auto max-w-7xl bg-mist">
+      <section className="section-py container-px mx-auto max-w-7xl bg-white/[0.02] backdrop-blur-sm">
         <SectionHeading
           eyebrow="How we work"
           title="Innovate. Build. Transform."

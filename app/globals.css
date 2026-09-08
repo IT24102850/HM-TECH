@@ -7,18 +7,49 @@
     @apply border-iris-100;
   }
   html {
-    scroll-behavior: smooth;
+    /* Lenis drives the scroll; native smooth-scroll would fight it. */
+    scroll-behavior: auto;
+    background-color: #07070b;
   }
   body {
     @apply bg-paper text-ink font-body antialiased;
+    /* The fixed WebGL stage paints behind the page, so the body stays
+       transparent and lets the film read through. */
+    background-color: transparent;
+    overflow-x: hidden;
   }
   ::selection {
-    @apply bg-iris-600 text-white;
+    @apply bg-iris-400 text-white;
   }
   :focus-visible {
-    outline: 2px solid #7c3aed;
-    outline-offset: 3px;
+    outline: 1px solid #8b5cf6;
+    outline-offset: 4px;
     border-radius: 2px;
+  }
+
+  ::-webkit-scrollbar {
+    width: 9px;
+  }
+  ::-webkit-scrollbar-track {
+    background: #07070b;
+  }
+  ::-webkit-scrollbar-thumb {
+    background: linear-gradient(180deg, #6d28d9, #d9b46a);
+    border-radius: 999px;
+    border: 2px solid #07070b;
+  }
+
+  /* Lenis: it sets these itself, but declaring them avoids a flash of
+     native-scroll behaviour before the library boots. */
+  html.lenis,
+  html.lenis body {
+    height: auto;
+  }
+  .lenis.lenis-smooth {
+    scroll-behavior: auto !important;
+  }
+  .lenis.lenis-stopped {
+    overflow: hidden;
   }
 }
 
@@ -27,30 +58,106 @@
     @apply px-6 md:px-10 lg:px-16;
   }
   .section-py {
-    @apply py-20 md:py-28;
+    @apply py-24 md:py-36;
   }
   .text-gradient {
     @apply bg-iris-gradient bg-clip-text text-transparent;
   }
+  .text-gold-gradient {
+    @apply bg-gold-gradient bg-clip-text text-transparent;
+  }
   .eyebrow {
-    @apply font-mono text-xs uppercase tracking-[0.25em] text-iris-600;
+    @apply font-mono text-[10px] uppercase tracking-wide2 text-iris-600;
   }
+  .eyebrow-gold {
+    @apply font-mono text-[10px] uppercase tracking-wide2 text-gold;
+  }
+
+  /* Glass panel, the workhorse surface of the film */
   .card-surface {
-    @apply bg-white border border-iris-100 rounded-2xl shadow-iris-sm;
+    @apply relative rounded-2xl border border-white/[0.07] bg-white/[0.025] shadow-film backdrop-blur-xl;
   }
+  .glass {
+    @apply border border-white/[0.08] bg-white/[0.04] backdrop-blur-xl;
+  }
+
   .btn-primary {
-    @apply inline-flex items-center justify-center gap-2 rounded-full bg-iris-gradient px-7 py-3.5 text-sm font-semibold text-white shadow-iris transition-transform duration-300 hover:scale-[1.03] active:scale-[0.98];
+    @apply relative inline-flex items-center justify-center gap-2 overflow-hidden rounded-full bg-iris-gradient px-8 py-4 text-xs font-semibold uppercase tracking-wide2 text-white shadow-iris transition-transform duration-500 hover:scale-[1.03] active:scale-[0.98];
   }
   .btn-ghost {
-    @apply inline-flex items-center justify-center gap-2 rounded-full border border-iris-200 bg-white px-7 py-3.5 text-sm font-semibold text-ink transition-colors duration-300 hover:border-iris-400 hover:bg-iris-50;
+    @apply inline-flex items-center justify-center gap-2 rounded-full border border-white/[0.12] bg-white/[0.03] px-8 py-4 text-xs font-semibold uppercase tracking-wide2 text-ink backdrop-blur-xl transition-all duration-500 hover:border-gold/60 hover:bg-white/[0.07];
   }
   .btn-secondary {
-    @apply inline-flex items-center justify-center gap-2 rounded-full border border-iris-200 bg-white px-7 py-3.5 text-sm font-semibold text-ink transition-colors duration-300 hover:border-iris-400 hover:bg-iris-50;
+    @apply inline-flex items-center justify-center gap-2 rounded-full border border-white/[0.12] bg-white/[0.03] px-8 py-4 text-xs font-semibold uppercase tracking-wide2 text-ink backdrop-blur-xl transition-all duration-500 hover:border-gold/60 hover:bg-white/[0.07];
+  }
+
+  /* Hairlines */
+  .rule-glow {
+    @apply h-px w-full;
+    background: linear-gradient(
+      90deg,
+      transparent,
+      rgba(139, 92, 246, 0.5),
+      rgba(217, 180, 106, 0.4),
+      transparent
+    );
+  }
+  .rule-gold {
+    @apply h-px w-full;
+    background: linear-gradient(90deg, transparent, rgba(217, 180, 106, 0.55), transparent);
+  }
+
+  /* 3D helpers */
+  .perspective {
+    perspective: 1200px;
+  }
+  .perspective-far {
+    perspective: 2000px;
+  }
+  .preserve-3d {
+    transform-style: preserve-3d;
+  }
+  .backface-hidden {
+    backface-visibility: hidden;
+  }
+
+  .bg-grid {
+    background-image: linear-gradient(rgba(139, 92, 246, 0.06) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(139, 92, 246, 0.06) 1px, transparent 1px);
+    background-size: 72px 72px;
+  }
+
+  .mask-fade-y {
+    -webkit-mask-image: linear-gradient(180deg, transparent, #000 12%, #000 88%, transparent);
+    mask-image: linear-gradient(180deg, transparent, #000 12%, #000 88%, transparent);
+  }
+  .mask-fade-x {
+    -webkit-mask-image: linear-gradient(90deg, transparent, #000 12%, #000 88%, transparent);
+    mask-image: linear-gradient(90deg, transparent, #000 12%, #000 88%, transparent);
+  }
+
+  /* Cinematic letterbox bars used on the film sections */
+  .letterbox::before,
+  .letterbox::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    right: 0;
+    height: 7vh;
+    background: #07070b;
+    z-index: 5;
+    pointer-events: none;
+  }
+  .letterbox::before {
+    top: 0;
+  }
+  .letterbox::after {
+    bottom: 0;
   }
 }
 
-/* Explicit keyframes so inline `style={{ animation: 'float ...' }}` usages
-   (e.g. HeroVisual) always emit, independent of Tailwind's class-usage scan. */
+/* Explicit keyframes so inline `style={{ animation: '...' }}` usages always
+   emit, independent of Tailwind's class-usage scan. */
 @keyframes float {
   0%,
   100% {
@@ -58,6 +165,15 @@
   }
   50% {
     transform: translateY(-14px);
+  }
+}
+
+@keyframes marquee {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(-50%);
   }
 }
 

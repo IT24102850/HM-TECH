@@ -39,7 +39,7 @@ export default function BlogPostPage({ params }: { params: { slug: string } }) {
             <ArrowLeft className="h-4 w-4" /> Back to blog
           </Link>
 
-          <p className="eyebrow mt-8 inline-flex items-center gap-2 rounded-full border border-iris-100 bg-white px-3 py-1.5 shadow-iris-sm">
+          <p className="eyebrow mt-8 inline-flex items-center gap-2 rounded-full border border-iris-100 bg-white/[0.04] backdrop-blur-xl px-3 py-1.5 shadow-iris-sm">
             {post.category}
           </p>
           <h1 className="mt-6 font-display text-3xl font-semibold leading-tight tracking-tight text-ink md:text-4xl">
@@ -67,7 +67,7 @@ export default function BlogPostPage({ params }: { params: { slug: string } }) {
       </article>
 
       {related.length > 0 && (
-        <section className="section-py container-px mx-auto max-w-7xl bg-mist">
+        <section className="section-py container-px mx-auto max-w-7xl bg-white/[0.02] backdrop-blur-sm">
           <p className="eyebrow text-center">Keep reading</p>
           <div className="mt-8 grid grid-cols-1 gap-6 md:grid-cols-2">
             {related.map((r) => (
