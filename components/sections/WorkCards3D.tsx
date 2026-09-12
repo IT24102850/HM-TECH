@@ -65,14 +65,14 @@ function WorkCard({ index, project }: { index: number; project: (typeof portfoli
             aria-hidden
             className="pointer-events-none absolute inset-0 opacity-0 transition-opacity duration-500 group-hover:opacity-100"
             style={{
-              background: `radial-gradient(420px circle at ${tilt.mx}% ${tilt.my}%, rgba(217,180,106,0.16), transparent 65%)`,
+              background: `radial-gradient(420px circle at ${tilt.mx}% ${tilt.my}%, rgba(168,132,47,0.12), transparent 65%)`,
               transform: "translateZ(12px)",
             }}
           />
 
           {/* layer 3 — logo panel */}
           <div
-            className="relative grid h-40 place-items-center overflow-hidden rounded-xl border border-white/[0.06] bg-white/[0.03]"
+            className="relative grid h-40 place-items-center overflow-hidden rounded-xl border border-iris-100 bg-iris-50/70"
             style={{ transform: `translateZ(${hover ? 46 : 26}px)`, transition: "transform 420ms cubic-bezier(0.22,1,0.36,1)" }}
           >
             <Image

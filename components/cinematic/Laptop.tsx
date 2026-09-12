@@ -23,10 +23,10 @@ import { Instance, Instances } from "@react-three/drei";
 import * as THREE from "three";
 import { createScreenTexture } from "./screenTexture";
 
-const TITANIUM = "#8E93A0";
-const TITANIUM_DARK = "#4A4E5A";
+const TITANIUM = "#C3C6D1";
+const TITANIUM_DARK = "#8C909D";
 const VIOLET = "#8B5CF6";
-const GOLD = "#D9B46A";
+const GOLD = "#A8842F";
 
 /** A part and the direction it flies when the machine comes apart. */
 type PartProps = {
@@ -150,7 +150,7 @@ export default function Laptop({
         {/* gold underside hairline */}
         <mesh position={[0, -0.479, 0.62]} rotation={[-Math.PI / 2, 0, 0]}>
           <planeGeometry args={[2.6, 1.7]} />
-          <meshBasicMaterial color={GOLD} transparent opacity={0.1} />
+          <meshBasicMaterial color={GOLD} transparent opacity={0.18} />
         </mesh>
       </Part>
 
@@ -229,7 +229,6 @@ export default function Laptop({
             color="#C4B5FD"
             transparent
             opacity={0.09}
-            blending={THREE.AdditiveBlending}
             depthWrite={false}
           />
         </mesh>

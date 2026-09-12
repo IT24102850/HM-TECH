@@ -66,7 +66,7 @@ export default function FilmCaptions() {
           >
             HM TECH
           </motion.h1>
-          <div className="mt-8 h-px w-40 bg-gradient-to-r from-transparent via-gold to-transparent" />
+          <div className="mt-8 h-px w-40 bg-gradient-to-r from-transparent via-gold/80 to-transparent" />
           <p className="mt-8 font-mono text-[10px] uppercase tracking-wide2 text-iris-600 md:text-xs">
             Innovate. Build. Transform.
           </p>
@@ -80,7 +80,7 @@ export default function FilmCaptions() {
           <span className="font-mono text-[9px] uppercase tracking-wide2 text-ink/35">
             Scroll
           </span>
-          <span className="relative grid h-10 w-[22px] place-items-start rounded-full border border-white/15 p-1">
+          <span className="relative grid h-10 w-[22px] place-items-start rounded-full border border-iris-300 p-1">
             <motion.span
               animate={{ y: [0, 14, 0], opacity: [1, 0.2, 1] }}
               transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}

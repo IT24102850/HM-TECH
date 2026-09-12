@@ -55,7 +55,7 @@ export default function ContactForm() {
                 <select
                   value={budget}
                   onChange={(e) => setBudget(e.target.value)}
-                  className="w-full rounded-xl border border-iris-200 bg-white/[0.04] backdrop-blur-xl px-4 py-3 text-sm text-ink focus:border-iris-400 focus:outline-none focus:ring-2 focus:ring-iris-400/30 placeholder:text-ink/30"
+                  className="w-full rounded-xl border border-iris-200 bg-white px-4 py-3 text-sm text-ink focus:border-iris-400 focus:outline-none focus:ring-2 focus:ring-iris-400/30 placeholder:text-ink/30"
                 >
                   {budgets.map((b) => (
                     <option key={b}>{b}</option>
@@ -69,7 +69,7 @@ export default function ContactForm() {
                 required
                 rows={5}
                 placeholder="What are you building, and what does success look like in 90 days?"
-                className="w-full resize-none rounded-xl border border-iris-200 bg-white/[0.04] backdrop-blur-xl px-4 py-3 text-sm text-ink placeholder:text-ink/35 focus:border-iris-400 focus:outline-none focus:ring-2 focus:ring-iris-400/30 placeholder:text-ink/30"
+                className="w-full resize-none rounded-xl border border-iris-200 bg-white px-4 py-3 text-sm text-ink placeholder:text-ink/35 focus:border-iris-400 focus:outline-none focus:ring-2 focus:ring-iris-400/30 placeholder:text-ink/30"
               />
             </div>
             <button type="submit" disabled={status === "loading"} className="btn-primary w-full sm:w-auto">
@@ -114,7 +114,7 @@ function Field({
         type={type}
         required={required}
         placeholder={placeholder}
-        className="w-full rounded-xl border border-iris-200 bg-white/[0.04] backdrop-blur-xl px-4 py-3 text-sm text-ink placeholder:text-ink/35 focus:border-iris-400 focus:outline-none focus:ring-2 focus:ring-iris-400/30 placeholder:text-ink/30"
+        className="w-full rounded-xl border border-iris-200 bg-white px-4 py-3 text-sm text-ink placeholder:text-ink/35 focus:border-iris-400 focus:outline-none focus:ring-2 focus:ring-iris-400/30 placeholder:text-ink/30"
       />
     </div>
   );

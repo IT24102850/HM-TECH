@@ -68,8 +68,8 @@ export default function ProcessSteps() {
               <span className="font-mono text-[10px] tracking-wide2 text-gold">
                 {s.n}
               </span>
-              <div className="grid h-10 w-10 place-items-center rounded-lg border border-white/10 bg-white/[0.04]">
-                <s.icon className="h-4 w-4 text-iris-500" />
+              <div className="grid h-10 w-10 place-items-center rounded-lg border border-iris-100 bg-iris-50">
+                <s.icon className="h-4 w-4 text-iris-600" />
               </div>
             </div>
             <h3 className="mt-8 font-display text-2xl font-medium tracking-tight text-ink">

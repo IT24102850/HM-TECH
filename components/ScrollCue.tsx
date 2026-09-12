@@ -30,7 +30,7 @@ export default function ScrollCue() {
           <span className="font-mono text-[10px] uppercase tracking-[0.35em] text-ink/40">
             Scroll
           </span>
-          <span className="relative grid h-9 w-[22px] place-items-start rounded-full border border-white/20 p-1">
+          <span className="relative grid h-9 w-[22px] place-items-start rounded-full border border-iris-300 p-1">
             <motion.span
               animate={{ y: [0, 12, 0], opacity: [1, 0.2, 1] }}
               transition={{ duration: 1.8, repeat: Infinity, ease: "easeInOut" }}

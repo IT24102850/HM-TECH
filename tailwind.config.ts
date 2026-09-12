@@ -8,41 +8,41 @@ const config: Config = {
   theme: {
     extend: {
       colors: {
-        /* Cinematic tech-noir. `ink` is the FOREGROUND (near-white) and
-           `paper` the off-black stage, so existing text-ink / bg-paper usage
-           reads correctly against the film. */
-        ink: "#ECEAF4",
-        paper: "#07070B",
-        mist: "#0D0D14",
+        /* Cinematic, on a light stage. `ink` is the FOREGROUND (near-black)
+           and `paper` the off-white stage, so text-ink / bg-paper usage reads
+           correctly against the film. */
+        ink: "#0B0A14",
+        paper: "#FBFBFD",
+        mist: "#F4F2FA",
         charcoal: {
-          DEFAULT: "#101018",
-          deep: "#0A0A10",
-          soft: "#16161F",
+          DEFAULT: "#ECEAF4",
+          deep: "#E2DEF0",
+          soft: "#F4F2FA",
         },
-        /* Subtle gold, used sparingly for highlights and rules */
+        /* Gold, deepened so it holds contrast as text on white */
         gold: {
-          DEFAULT: "#D9B46A",
-          soft: "#F2DCAE",
-          deep: "#9C7A32",
+          DEFAULT: "#A8842F",
+          soft: "#D9B46A",
+          deep: "#7E6120",
         },
         accent: {
           DEFAULT: "#8B5CF6",
           soft: "#C4B5FD",
         },
-        /* Violet ramp inverted for a dark stage: low steps are surfaces and
-           hairlines, high steps are bright text and accents. */
+        /* Violet ramp for a light stage: low steps are tints and hairlines,
+           high steps are readable text. */
         iris: {
-          50: "#0F0C1C",
-          100: "#181330",
-          200: "#241B4C",
-          300: "#3A2B7A",
-          400: "#8B5CF6",
-          500: "#A17DFF",
-          600: "#B79BFF",
-          700: "#CDBAFF",
-          800: "#E0D5FF",
-          900: "#EFE9FF",
-          950: "#F8F5FF",
+          50: "#F5F2FE",
+          100: "#ECE5FD",
+          200: "#D8CBFB",
+          300: "#BDA5F6",
+          400: "#A78BFA",
+          500: "#8B5CF6",
+          600: "#7C3AED",
+          700: "#6D28D9",
+          800: "#5B21B6",
+          900: "#3E1A82",
+          950: "#26105A",
         },
       },
       fontFamily: {
@@ -55,15 +55,15 @@ const config: Config = {
         "iris-gradient":
           "linear-gradient(135deg, #6D28D9 0%, #8B5CF6 55%, #A78BFA 100%)",
         "gold-gradient":
-          "linear-gradient(135deg, #9C7A32 0%, #D9B46A 50%, #F2DCAE 100%)",
+          "linear-gradient(135deg, #7E6120 0%, #A8842F 50%, #D9B46A 100%)",
         "iris-radial":
           "radial-gradient(circle at center, rgba(139,92,246,0.30) 0%, transparent 70%)",
       },
       boxShadow: {
-        iris: "0 30px 90px -25px rgba(139, 92, 246, 0.55)",
-        "iris-sm": "0 14px 40px -14px rgba(139, 92, 246, 0.45)",
-        gold: "0 20px 60px -25px rgba(217, 180, 106, 0.45)",
-        film: "0 40px 120px -40px rgba(0, 0, 0, 0.9)",
+        iris: "0 30px 80px -30px rgba(109, 40, 217, 0.35)",
+        "iris-sm": "0 12px 32px -14px rgba(109, 40, 217, 0.25)",
+        gold: "0 20px 60px -25px rgba(168, 132, 47, 0.3)",
+        film: "0 30px 80px -40px rgba(38, 16, 90, 0.22)",
       },
       letterSpacing: {
         cinema: "0.42em",

@@ -59,12 +59,12 @@ function Card({ index, children }: { index: number; children: React.ReactNode })
             aria-hidden
             className="pointer-events-none absolute inset-0 opacity-0 transition-opacity duration-500 group-hover:opacity-100"
             style={{
-              background: `radial-gradient(460px circle at ${tilt.mx}% ${tilt.my}%, rgba(139,92,246,0.20), rgba(217,180,106,0.06) 42%, transparent 70%)`,
+              background: `radial-gradient(460px circle at ${tilt.mx}% ${tilt.my}%, rgba(139,92,246,0.14), rgba(168,132,47,0.06) 42%, transparent 70%)`,
             }}
           />
           <div
             aria-hidden
-            className="pointer-events-none absolute inset-0 rounded-2xl opacity-0 ring-1 ring-inset ring-gold/25 transition-opacity duration-700 group-hover:opacity-100"
+            className="pointer-events-none absolute inset-0 rounded-2xl opacity-0 ring-1 ring-inset ring-gold/40 transition-opacity duration-700 group-hover:opacity-100"
           />
           <div className="relative" style={{ transform: "translateZ(46px)" }}>
             {children}
@@ -83,8 +83,8 @@ export default function ServiceCards3D() {
           <span className="font-mono text-[10px] uppercase tracking-wide2 text-gold">
             {String(i + 1).padStart(2, "0")}
           </span>
-          <div className="mt-7 grid h-12 w-12 place-items-center rounded-xl border border-white/10 bg-white/[0.04]">
-            <s.icon className="h-5 w-5 text-iris-500" />
+          <div className="mt-7 grid h-12 w-12 place-items-center rounded-xl border border-iris-100 bg-iris-50">
+            <s.icon className="h-5 w-5 text-iris-600" />
           </div>
           <h3 className="mt-7 font-display text-xl font-medium tracking-tight text-ink">
             {s.title}

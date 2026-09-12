@@ -31,7 +31,7 @@ type Technology = {
 
 const technologies: Technology[] = [
   { name: "React", icon: SiReact, color: "#61DAFB" },
-  { name: "Next.js", icon: SiNextdotjs, color: "#FFFFFF" },
+  { name: "Next.js", icon: SiNextdotjs, color: "#0A0A14" },
   { name: "Node.js", icon: SiNodedotjs, color: "#5FA04E" },
   { name: "TypeScript", icon: SiTypescript, color: "#3178C6" },
   { name: "Python", icon: SiPython, color: "#3776AB" },
@@ -43,7 +43,7 @@ const technologies: Technology[] = [
   { name: "GraphQL", icon: SiGraphql, color: "#E10098" },
   { name: "Kubernetes", icon: SiKubernetes, color: "#326CE5" },
   { name: "Figma", icon: SiFigma, color: "#F24E1E" },
-  { name: "Vercel", icon: SiVercel, color: "#FFFFFF" },
+  { name: "Vercel", icon: SiVercel, color: "#0A0A14" },
   { name: "Redis", icon: SiRedis, color: "#DC382D" },
   { name: "Git", icon: SiGit, color: "#F05032" },
   { name: "Framer Motion", icon: SiFramer, color: "#0055FF" },
@@ -56,7 +56,7 @@ export default function TechStackGrid() {
       {technologies.map((tech) => (
         <TiltCard key={tech.name} className="h-full">
           <div className="flex flex-col items-center justify-center p-6">
-            <div className="grid h-14 w-14 place-items-center rounded-2xl bg-white/[0.04] backdrop-blur-xl shadow-iris-sm ring-1 ring-iris-100 md:h-16 md:w-16">
+            <div className="grid h-14 w-14 place-items-center rounded-2xl bg-white shadow-iris-sm ring-1 ring-iris-100 md:h-16 md:w-16">
               <tech.icon className="h-7 w-7 md:h-8 md:w-8" style={{ color: tech.color }} />
             </div>
             <h3 className="mt-4 text-center font-display text-sm font-semibold text-ink md:text-base">

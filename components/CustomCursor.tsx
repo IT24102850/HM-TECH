@@ -54,7 +54,7 @@ export default function CustomCursor() {
             opacity: hovering ? 0.5 : 0.28,
           }}
           transition={{ type: "spring", stiffness: 260, damping: 22 }}
-          className="-translate-x-1/2 -translate-y-1/2 rounded-full bg-[radial-gradient(circle,rgba(139,92,246,0.95),rgba(217,180,106,0.3)_60%,transparent_72%)] blur-[2px]"
+          className="-translate-x-1/2 -translate-y-1/2 rounded-full bg-[radial-gradient(circle,rgba(124,58,237,0.85),rgba(168,132,47,0.3)_60%,transparent_72%)] blur-[2px]"
         />
       </motion.div>
       <motion.div

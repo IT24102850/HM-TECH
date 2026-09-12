@@ -63,7 +63,7 @@ export default function Home() {
       <FilmCaptions />
 
       {/* ══════════════ STATS ══════════════ */}
-      <section className="container-px relative mx-auto max-w-7xl border-y border-white/[0.06] py-20">
+      <section className="container-px relative mx-auto max-w-7xl border-y border-iris-100 py-20">
         <StatsParallax />
       </section>
 
@@ -74,8 +74,8 @@ export default function Home() {
           speed={0.5}
           className="pointer-events-none absolute inset-0 -z-10"
         >
-          <div className="absolute left-[6%] top-10 h-64 w-64 rounded-full bg-iris-400/[0.07] blur-3xl" />
-          <div className="absolute right-[10%] top-40 h-72 w-72 rounded-full bg-gold/[0.04] blur-3xl" />
+          <div className="absolute left-[6%] top-10 h-64 w-64 rounded-full bg-iris-300/30 blur-3xl" />
+          <div className="absolute right-[10%] top-40 h-72 w-72 rounded-full bg-gold/10 blur-3xl" />
         </ParallaxLayer>
 
         <ParallaxLayer speed={0.12}>
@@ -121,7 +121,7 @@ export default function Home() {
           speed={0.55}
           className="pointer-events-none absolute inset-0 -z-10"
         >
-          <div className="absolute left-1/2 top-1/3 h-[30rem] w-[30rem] -translate-x-1/2 rounded-full bg-iris-400/[0.06] blur-3xl" />
+          <div className="absolute left-1/2 top-1/3 h-[30rem] w-[30rem] -translate-x-1/2 rounded-full bg-iris-300/25 blur-3xl" />
         </ParallaxLayer>
 
         <ParallaxLayer speed={0.12}>
@@ -145,7 +145,7 @@ export default function Home() {
           speed={0.45}
           className="pointer-events-none absolute inset-0 -z-10"
         >
-          <div className="absolute right-[8%] top-20 h-80 w-80 rounded-full bg-gold/[0.05] blur-3xl" />
+          <div className="absolute right-[8%] top-20 h-80 w-80 rounded-full bg-gold/10 blur-3xl" />
         </ParallaxLayer>
 
         <ParallaxLayer speed={0.12}>

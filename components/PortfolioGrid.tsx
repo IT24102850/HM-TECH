@@ -26,7 +26,7 @@ export default function PortfolioGrid() {
             className={`rounded-full border px-4 py-2 text-sm font-semibold transition-all duration-300 ${
               activeFilter === filter
                 ? "border-transparent bg-iris-gradient text-white shadow-iris-sm"
-                : "border-iris-200 bg-white/[0.04] text-ink/60 backdrop-blur-xl hover:border-iris-400 hover:text-ink"
+                : "border-iris-200 bg-white text-ink/60 hover:border-iris-400 hover:text-ink"
             }`}
           >
             {filter}

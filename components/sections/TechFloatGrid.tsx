@@ -89,9 +89,9 @@ export default function TechFloatGrid() {
                 ease: "easeInOut",
                 delay: (i % 7) * 0.35,
               }}
-              className="group card-surface flex flex-col items-center justify-center gap-3 py-7 transition-colors duration-500 hover:border-gold/30"
+              className="group card-surface flex flex-col items-center justify-center gap-3 py-7 transition-colors duration-500 hover:border-gold/50"
             >
-              <t.icon className="h-6 w-6 text-iris-500 transition-colors duration-500 group-hover:text-gold md:h-7 md:w-7" />
+              <t.icon className="h-6 w-6 text-iris-600 transition-colors duration-500 group-hover:text-gold md:h-7 md:w-7" />
               <span className="font-mono text-[9px] uppercase tracking-wide2 text-ink/40">
                 {t.name}
               </span>

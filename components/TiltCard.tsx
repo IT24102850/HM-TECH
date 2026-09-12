@@ -65,13 +65,13 @@ export default function TiltCard({
           aria-hidden
           className="pointer-events-none absolute inset-0 opacity-0 transition-opacity duration-300 group-hover:opacity-100"
           style={{
-            background: `radial-gradient(420px circle at ${style.mx}% ${style.my}%, rgba(139,92,246,0.2), rgba(217,180,106,0.06) 42%, transparent 68%)`,
+            background: `radial-gradient(420px circle at ${style.mx}% ${style.my}%, rgba(139,92,246,0.14), rgba(168,132,47,0.06) 42%, transparent 68%)`,
           }}
         />
         {/* edge highlight */}
         <div
           aria-hidden
-          className="pointer-events-none absolute inset-0 rounded-2xl opacity-0 ring-1 ring-inset ring-gold/25 transition-opacity duration-500 group-hover:opacity-100"
+          className="pointer-events-none absolute inset-0 rounded-2xl opacity-0 ring-1 ring-inset ring-gold/40 transition-opacity duration-500 group-hover:opacity-100"
         />
 
         <div className="relative" style={{ transform: "translateZ(42px)" }}>

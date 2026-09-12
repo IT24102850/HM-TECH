@@ -27,7 +27,7 @@ const steps = [
 export default function ProcessTimeline() {
   return (
     <div className="relative grid grid-cols-1 gap-6 md:grid-cols-3 md:gap-8">
-      <div className="absolute left-0 right-0 top-11 hidden h-px bg-gradient-to-r from-transparent via-iris-400/50 to-transparent md:block" />
+      <div className="absolute left-0 right-0 top-11 hidden h-px bg-gradient-to-r from-transparent via-iris-300 to-transparent md:block" />
       {steps.map((s, i) => (
         <motion.div
           key={s.n}

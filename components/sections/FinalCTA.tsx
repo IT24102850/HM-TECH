@@ -31,11 +31,11 @@ export default function FinalCTA() {
       <motion.div
         data-anim="cta"
         style={{ scale, opacity }}
-        className="relative overflow-hidden rounded-[2rem] border border-white/[0.08] bg-[linear-gradient(135deg,rgba(24,19,48,0.9),rgba(10,10,16,0.95))] px-8 py-20 text-center shadow-film md:px-16 md:py-28"
+        className="relative overflow-hidden rounded-[2rem] border border-iris-100 bg-[linear-gradient(135deg,rgba(245,242,254,0.96),rgba(255,255,255,0.98))] px-8 py-20 text-center shadow-film md:px-16 md:py-28"
       >
         {/* ambient pools */}
-        <div className="pointer-events-none absolute -left-24 -top-28 h-72 w-72 rounded-full bg-iris-400/20 blur-3xl" />
-        <div className="pointer-events-none absolute -bottom-28 -right-20 h-80 w-80 rounded-full bg-gold/10 blur-3xl" />
+        <div className="pointer-events-none absolute -left-24 -top-28 h-72 w-72 rounded-full bg-iris-300/40 blur-3xl" />
+        <div className="pointer-events-none absolute -bottom-28 -right-20 h-80 w-80 rounded-full bg-gold/15 blur-3xl" />
 
         {/* light sweep, fires once when the panel lands */}
         {inView && (
@@ -44,7 +44,7 @@ export default function FinalCTA() {
             initial={{ x: "-130%" }}
             animate={{ x: "230%" }}
             transition={{ duration: 1.9, delay: 0.35, ease: [0.22, 1, 0.36, 1] }}
-            className="pointer-events-none absolute inset-y-0 w-1/3 -skew-x-12 bg-[linear-gradient(90deg,transparent,rgba(255,255,255,0.16),rgba(217,180,106,0.12),transparent)]"
+            className="pointer-events-none absolute inset-y-0 w-1/3 -skew-x-12 bg-[linear-gradient(90deg,transparent,rgba(139,92,246,0.14),rgba(168,132,47,0.1),transparent)]"
           />
         )}
 

@@ -16,9 +16,9 @@ import { useFrame } from "@react-three/fiber";
 import { Float } from "@react-three/drei";
 import * as THREE from "three";
 
-const VIOLET = "#8B5CF6";
-const VIOLET_SOFT = "#C4B5FD";
-const GOLD = "#D9B46A";
+const VIOLET = "#7C3AED";
+const VIOLET_SOFT = "#A78BFA";
+const GOLD = "#A8842F";
 
 function makeRng(seed: number) {
   let s = seed;
@@ -67,8 +67,7 @@ export function DataStreams({ count = 26, idle = 1 }: { count?: number; idle?: n
           <meshBasicMaterial
             color={s.gold ? GOLD : VIOLET_SOFT}
             transparent
-            opacity={s.gold ? 0.5 : 0.32}
-            blending={THREE.AdditiveBlending}
+            opacity={s.gold ? 0.55 : 0.38}
             depthWrite={false}
           />
         </mesh>
@@ -88,7 +87,7 @@ export function Motes({ count = 1100, idle = 1 }: { count?: number; idle?: numbe
       new THREE.Color(VIOLET),
       new THREE.Color(VIOLET_SOFT),
       new THREE.Color(GOLD),
-      new THREE.Color("#ffffff"),
+      new THREE.Color("#5B21B6"),
     ];
     for (let i = 0; i < count; i++) {
       const i3 = i * 3;
@@ -130,10 +129,9 @@ export function Motes({ count = 1100, idle = 1 }: { count?: number; idle?: numbe
         size={0.045}
         vertexColors
         transparent
-        opacity={0.75}
+        opacity={0.55}
         sizeAttenuation
         depthWrite={false}
-        blending={THREE.AdditiveBlending}
       />
     </points>
   );
@@ -227,7 +225,7 @@ export function VolumetricLight({ intensity = 1 }: { intensity?: number }) {
     if (!ref.current) return;
     const t = state.clock.getElapsedTime();
     const m = ref.current.material as THREE.MeshBasicMaterial;
-    m.opacity = (0.05 + Math.sin(t * 0.5) * 0.012) * intensity;
+    m.opacity = (0.09 + Math.sin(t * 0.5) * 0.015) * intensity;
     ref.current.rotation.z = Math.sin(t * 0.16) * 0.06;
   });
 
@@ -235,11 +233,10 @@ export function VolumetricLight({ intensity = 1 }: { intensity?: number }) {
     <mesh ref={ref} position={[-1.6, 3.4, -1.4]} rotation={[0, 0, 0.34]}>
       <coneGeometry args={[2.6, 9, 32, 1, true]} />
       <meshBasicMaterial
-        color={VIOLET_SOFT}
+        color="#C4B5FD"
         transparent
-        opacity={0.05}
+        opacity={0.09}
         side={THREE.DoubleSide}
-        blending={THREE.AdditiveBlending}
         depthWrite={false}
       />
     </mesh>
@@ -258,9 +255,9 @@ export function ReflectiveFloor({ opacity = 1 }: { opacity?: number }) {
     const ctx = c.getContext("2d");
     if (!ctx) return null;
     const g = ctx.createRadialGradient(256, 256, 20, 256, 256, 250);
-    g.addColorStop(0, "rgba(30,26,54,0.95)");
-    g.addColorStop(0.55, "rgba(16,14,30,0.6)");
-    g.addColorStop(1, "rgba(7,7,11,0)");
+    g.addColorStop(0, "rgba(226,218,247,0.95)");
+    g.addColorStop(0.55, "rgba(240,236,251,0.6)");
+    g.addColorStop(1, "rgba(251,251,253,0)");
     ctx.fillStyle = g;
     ctx.fillRect(0, 0, 512, 512);
     const t = new THREE.CanvasTexture(c);
@@ -287,9 +284,9 @@ export function ReflectiveFloor({ opacity = 1 }: { opacity?: number }) {
           map={falloff ?? undefined}
           transparent
           opacity={0.9}
-          metalness={0.92}
-          roughness={0.14}
-          color="#15121F"
+          metalness={0.6}
+          roughness={0.18}
+          color="#EDE9FE"
           depthWrite={false}
         />
       </mesh>
@@ -300,8 +297,7 @@ export function ReflectiveFloor({ opacity = 1 }: { opacity?: number }) {
           color={VIOLET}
           transparent
           opacity={0.22}
-          blending={THREE.AdditiveBlending}
-          depthWrite={false}
+            depthWrite={false}
         />
       </mesh>
     </group>
@@ -350,11 +346,11 @@ export function FloatingOrbs({ count = 16, idle = 1 }: { count?: number; idle?: 
             <meshStandardMaterial
               color={o.gold ? GOLD : VIOLET}
               emissive={o.gold ? GOLD : VIOLET}
-              emissiveIntensity={0.35}
-              metalness={0.85}
-              roughness={0.22}
+              emissiveIntensity={0.12}
+              metalness={0.5}
+              roughness={0.3}
               transparent
-              opacity={0.5}
+              opacity={0.7}
             />
           </mesh>
         </Float>

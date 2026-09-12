@@ -46,7 +46,7 @@ export default function LoadingScreen() {
           className="fixed inset-0 z-[100] grid place-items-center bg-paper"
         >
           <div className="pointer-events-none absolute inset-0 bg-grid opacity-60" />
-          <div className="pointer-events-none absolute left-1/2 top-1/2 h-[420px] w-[420px] -translate-x-1/2 -translate-y-1/2 rounded-full bg-[radial-gradient(circle,rgba(139,92,246,0.28),transparent_65%)] blur-2xl" />
+          <div className="pointer-events-none absolute left-1/2 top-1/2 h-[420px] w-[420px] -translate-x-1/2 -translate-y-1/2 rounded-full bg-[radial-gradient(circle,rgba(139,92,246,0.18),transparent_65%)] blur-2xl" />
 
           <div className="relative flex flex-col items-center gap-6">
             <motion.div
@@ -59,12 +59,12 @@ export default function LoadingScreen() {
               <motion.span
                 animate={{ scale: [1, 1.5], opacity: [0.5, 0] }}
                 transition={{ duration: 1.8, repeat: Infinity, ease: "easeOut" }}
-                className="absolute h-24 w-24 rounded-full border border-iris-400/50"
+                className="absolute h-24 w-24 rounded-full border border-iris-300"
               />
               <motion.span
                 animate={{ rotate: 360 }}
                 transition={{ duration: 1.4, repeat: Infinity, ease: "linear" }}
-                className="absolute h-20 w-20 rounded-full border-2 border-transparent border-t-iris-500 border-r-gold"
+                className="absolute h-20 w-20 rounded-full border-2 border-transparent border-t-iris-600 border-r-gold"
               />
               <img
                 src="/favicon_io/android-chrome-512x512.png"
@@ -80,7 +80,7 @@ export default function LoadingScreen() {
               <p className="font-display text-3xl font-semibold text-gradient tabular-nums">
                 {progress}%
               </p>
-              <div className="h-px w-48 overflow-hidden bg-white/10">
+              <div className="h-px w-48 overflow-hidden bg-iris-100">
                 <motion.div
                   className="h-full bg-iris-gradient"
                   style={{ width: `${progress}%` }}

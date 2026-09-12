@@ -25,7 +25,6 @@
 import { useEffect, useRef, useState } from "react";
 import { Canvas, useFrame, useThree } from "@react-three/fiber";
 import { AdaptiveDpr, Environment, Lightformer } from "@react-three/drei";
-import { EffectComposer, Bloom, Vignette } from "@react-three/postprocessing";
 import * as THREE from "three";
 
 import Laptop from "./Laptop";
@@ -291,9 +290,8 @@ export default function CinematicStage() {
         dpr={quality === "high" ? [1, 1.35] : [1, 1]}
         camera={{ position: [0, 0.95, 7.4], fov: 38, near: 0.05, far: 90 }}
         gl={{
-          // The bloom pass already softens edges; MSAA on top of it is pure
-          // cost on integrated graphics.
-          antialias: false,
+          // No post pass on the light stage, so MSAA is what resolves edges.
+          antialias: true,
           alpha: false,
           powerPreference: "high-performance",
         }}
@@ -301,45 +299,48 @@ export default function CinematicStage() {
         performance={{ min: 0.55 }}
         style={{ width: "100%", height: "100%" }}
         onCreated={({ gl }) => {
-          gl.setClearColor("#07070B", 1);
+          gl.setClearColor("#FBFBFD", 1);
           stage.ready = true;
         }}
       >
-        <fog attach="fog" args={["#07070B", 9, 34]} />
+        {/* Fog in the page colour, so distant geometry dissolves into the
+            paper rather than ending on a silhouette. */}
+        <fog attach="fog" args={["#FBFBFD", 10, 30]} />
 
-        <ambientLight intensity={0.35} />
-        <directionalLight position={[5, 7, 6]} intensity={1.5} color="#EDE9FE" />
-        <directionalLight position={[-6, 2, -4]} intensity={0.7} color="#8B5CF6" />
-        <pointLight position={[0, 1.2, 3.2]} intensity={16} color="#C4B5FD" distance={16} />
-        <pointLight position={[3.4, -1, 2]} intensity={9} color="#D9B46A" distance={14} />
+        <ambientLight intensity={1.05} />
+        <hemisphereLight args={["#ffffff", "#E4DDF7", 0.7]} />
+        <directionalLight position={[5, 8, 6]} intensity={2.1} color="#ffffff" />
+        <directionalLight position={[-6, 2, -4]} intensity={0.8} color="#A78BFA" />
+        <pointLight position={[0, 1.2, 3.2]} intensity={10} color="#C4B5FD" distance={14} />
+        <pointLight position={[3.4, -1, 2]} intensity={6} color="#D9B46A" distance={12} />
 
         {/* Studio reflections built in-scene, so the titanium has something to
             catch without fetching an HDR from the network. */}
         <Environment resolution={128} frames={1}>
           <Lightformer
-            intensity={2.2}
+            intensity={2.4}
             position={[0, 4, -6]}
             scale={[12, 6, 1]}
-            color="#8B5CF6"
-          />
-          <Lightformer
-            intensity={1.6}
-            position={[-6, 1, 3]}
-            scale={[8, 8, 1]}
             color="#ffffff"
           />
           <Lightformer
-            intensity={1.1}
-            position={[6, -2, 2]}
-            scale={[8, 6, 1]}
-            color="#D9B46A"
+            intensity={1.8}
+            position={[-6, 1, 3]}
+            scale={[8, 8, 1]}
+            color="#EDE9FE"
           />
           <Lightformer
-            intensity={0.8}
+            intensity={1.2}
+            position={[6, -2, 2]}
+            scale={[8, 6, 1]}
+            color="#C4B5FD"
+          />
+          <Lightformer
+            intensity={1.4}
             position={[0, -5, 0]}
             rotation={[Math.PI / 2, 0, 0]}
             scale={[14, 14, 1]}
-            color="#1B1630"
+            color="#F4F2FA"
           />
         </Environment>
 
@@ -348,19 +349,10 @@ export default function CinematicStage() {
         {/* drops resolution automatically if frames start to slip */}
         <AdaptiveDpr pixelated={false} />
 
-        {/* Two passes, both cheap. Bloom runs at half resolution, which is
-            invisible on a glow and roughly halves its cost. The film-grain
-            pass was a third full-screen draw for very little, so it is gone. */}
-        <EffectComposer>
-          <Bloom
-            luminanceThreshold={0.3}
-            luminanceSmoothing={0.85}
-            intensity={0.85}
-            mipmapBlur
-            resolutionScale={0.5}
-          />
-          <Vignette eskil={false} offset={0.2} darkness={0.82} />
-        </EffectComposer>
+        {/* No post-processing on the light stage. Bloom keys on luminance and
+            the background is white, so it would glow the whole frame; a
+            vignette would just grey the corners. Depth comes from shading and
+            the reflective surface instead. */}
       </Canvas>
     </div>
   );

@@ -40,14 +40,14 @@ export default function Navbar() {
       transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1], delay: 0.15 }}
       className={`sticky top-0 z-50 transition-all duration-500 ${
         scrolled
-          ? "border-b border-white/[0.07] bg-paper/70 shadow-[0_14px_50px_-28px_rgba(139,92,246,0.6)] backdrop-blur-2xl"
+          ? "border-b border-iris-100 bg-white/80 shadow-[0_14px_50px_-30px_rgba(109,40,217,0.35)] backdrop-blur-2xl"
           : "bg-transparent"
       }`}
     >
       <nav className="container-px mx-auto flex max-w-7xl items-center justify-between py-4">
         <Link href="/" className="group flex items-center gap-3">
           <span className="relative">
-            <span className="absolute -inset-2 rounded-full bg-iris-400/25 opacity-0 blur-lg transition-opacity duration-500 group-hover:opacity-100" />
+            <span className="absolute -inset-2 rounded-full bg-iris-200/80 opacity-0 blur-lg transition-opacity duration-500 group-hover:opacity-100" />
             <Image
               src="/logo.png"
               alt="HM Tech"
@@ -83,7 +83,7 @@ export default function Navbar() {
                   {active && (
                     <motion.span
                       layoutId="nav-underline"
-                      className="absolute -bottom-1 left-0 right-0 h-[2px] rounded-full bg-iris-gradient shadow-[0_0_12px_rgba(139,92,246,0.8)]"
+                      className="absolute -bottom-1 left-0 right-0 h-[2px] rounded-full bg-iris-gradient shadow-[0_0_10px_rgba(139,92,246,0.45)]"
                     />
                   )}
                 </Link>
@@ -102,7 +102,7 @@ export default function Navbar() {
         <button
           aria-label={open ? "Close menu" : "Open menu"}
           onClick={() => setOpen((v) => !v)}
-          className="grid h-10 w-10 place-items-center rounded-full border border-white/[0.12] bg-white/[0.04] text-ink backdrop-blur-xl md:hidden"
+          className="grid h-10 w-10 place-items-center rounded-full border border-iris-200 bg-white/80 text-ink backdrop-blur-xl md:hidden"
         >
           {open ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
         </button>
@@ -115,7 +115,7 @@ export default function Navbar() {
             animate={{ height: "auto", opacity: 1 }}
             exit={{ height: 0, opacity: 0 }}
             transition={{ duration: 0.35, ease: [0.22, 1, 0.36, 1] }}
-            className="overflow-hidden border-t border-white/[0.07] bg-paper/95 backdrop-blur-2xl md:hidden"
+            className="overflow-hidden border-t border-iris-100 bg-white/95 backdrop-blur-2xl md:hidden"
           >
             <ul className="container-px mx-auto flex max-w-7xl flex-col gap-1 py-4">
               {links.map((l, i) => (
@@ -130,7 +130,7 @@ export default function Navbar() {
                     className={`block rounded-xl px-3 py-3 text-base font-medium transition-colors ${
                       pathname === l.href
                         ? "bg-iris-100/70 text-iris-700"
-                        : "text-ink/70 hover:bg-white/[0.04]"
+                        : "text-ink/70 hover:bg-iris-50"
                     }`}
                   >
                     {l.label}

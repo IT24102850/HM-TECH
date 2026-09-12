@@ -9,7 +9,7 @@ export default function FAQSection() {
   const [open, setOpen] = useState<number | null>(0);
 
   return (
-    <div className="mx-auto max-w-3xl divide-y divide-iris-100 rounded-2xl border border-iris-100 bg-white/[0.04] backdrop-blur-xl shadow-iris-sm">
+    <div className="mx-auto max-w-3xl divide-y divide-iris-100 rounded-2xl border border-iris-100 bg-white shadow-iris-sm">
       {faqs.map((item, i) => {
         const isOpen = open === i;
         return (

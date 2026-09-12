@@ -40,7 +40,7 @@ export default function ServicesPage() {
       <section className="relative overflow-hidden">
         <div className="pointer-events-none absolute inset-0 bg-iris-radial" />
         <div className="container-px relative mx-auto max-w-4xl pb-6 pt-16 text-center md:pt-24">
-          <p className="eyebrow inline-flex items-center gap-2 rounded-full border border-iris-100 bg-white/[0.04] backdrop-blur-xl px-3 py-1.5 shadow-iris-sm">
+          <p className="eyebrow inline-flex items-center gap-2 rounded-full border border-iris-100 bg-white px-3 py-1.5 shadow-iris-sm">
             Our Services
           </p>
           <h1 className="mt-6 font-display text-4xl font-semibold leading-tight tracking-tight text-ink md:text-5xl">
@@ -67,7 +67,7 @@ export default function ServicesPage() {
         </div>
       </section>
 
-      <section className="section-py container-px mx-auto max-w-7xl bg-white/[0.02] backdrop-blur-sm">
+      <section className="section-py container-px mx-auto max-w-7xl bg-mist">
         <SectionHeading
           eyebrow="How we work"
           title="Innovate. Build. Transform."
