@@ -17,10 +17,26 @@ const links = [
   { href: "/contact", label: "Contact" },
 ];
 
+/**
+ * Homepage sections the nav mirrors, each mapped to the nav item that owns it.
+ * Every tracked section MUST map to a real link: a section with no owner left
+ * no item active at all, so the marker blinked out while scrolling past it.
+ * Process belongs to Services, since it describes how the work is done.
+ */
+const SECTION_OWNER: Record<string, string> = {
+  services: "/services",
+  process: "/services",
+  technologies: "/technologies",
+  work: "/portfolio",
+};
+const TRACKED = Object.keys(SECTION_OWNER);
+
 export default function Navbar() {
   const pathname = usePathname();
   const [scrolled, setScrolled] = useState(false);
   const [open, setOpen] = useState(false);
+  /** Which homepage section the reader is currently in, if any. */
+  const [section, setSection] = useState<string | null>(null);
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 12);
@@ -28,6 +44,42 @@ export default function Navbar() {
     window.addEventListener("scroll", onScroll, { passive: true });
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
+
+  /* Scroll-spy: on the homepage the nav follows the reader down the page, so
+     Portfolio lights up over the work section, Technologies over the stack,
+     and so on. Only the homepage has these sections; every other route falls
+     back to matching the path. */
+  useEffect(() => {
+    if (pathname !== "/") {
+      setSection(null);
+      return;
+    }
+
+    const els = TRACKED.map((id) => document.getElementById(id)).filter(
+      (el): el is HTMLElement => el !== null
+    );
+    if (!els.length) return;
+
+    const pick = () => {
+      // The section crossing the upper third of the viewport is the one the
+      // reader is actually looking at.
+      const line = window.innerHeight * 0.35;
+      let current: string | null = null;
+      for (const el of els) {
+        const r = el.getBoundingClientRect();
+        if (r.top <= line && r.bottom > line) current = el.id;
+      }
+      setSection((prev) => (prev === current ? prev : current));
+    };
+
+    pick();
+    window.addEventListener("scroll", pick, { passive: true });
+    window.addEventListener("resize", pick);
+    return () => {
+      window.removeEventListener("scroll", pick);
+      window.removeEventListener("resize", pick);
+    };
+  }, [pathname]);
 
   useEffect(() => {
     setOpen(false);
@@ -69,7 +121,11 @@ export default function Navbar() {
 
         <ul className="hidden items-center gap-9 md:flex">
           {links.map((l) => {
-            const active = pathname === l.href;
+            // While scrolling the homepage the marker follows the section in
+            // view; outside those sections it falls back to the current route,
+            // so exactly one item is always marked.
+            const owner = section ? SECTION_OWNER[section] : null;
+            const active = owner ? l.href === owner : pathname === l.href;
             return (
               <li key={l.href}>
                 <Link
@@ -101,6 +157,9 @@ export default function Navbar() {
 
         <button
           aria-label={open ? "Close menu" : "Open menu"}
+          aria-expanded={open}
+          aria-controls="mobile-navigation"
+          type="button"
           onClick={() => setOpen((v) => !v)}
           className="grid h-10 w-10 place-items-center rounded-full border border-iris-200 bg-white/80 text-ink backdrop-blur-xl md:hidden"
         >
@@ -115,6 +174,7 @@ export default function Navbar() {
             animate={{ height: "auto", opacity: 1 }}
             exit={{ height: 0, opacity: 0 }}
             transition={{ duration: 0.35, ease: [0.22, 1, 0.36, 1] }}
+            id="mobile-navigation"
             className="overflow-hidden border-t border-iris-100 bg-white/95 backdrop-blur-2xl md:hidden"
           >
             <ul className="container-px mx-auto flex max-w-7xl flex-col gap-1 py-4">
@@ -127,6 +187,7 @@ export default function Navbar() {
                 >
                   <Link
                     href={l.href}
+                    onClick={() => setOpen(false)}
                     className={`block rounded-xl px-3 py-3 text-base font-medium transition-colors ${
                       pathname === l.href
                         ? "bg-iris-100/70 text-iris-700"
@@ -138,7 +199,7 @@ export default function Navbar() {
                 </motion.li>
               ))}
               <li className="pt-2">
-                <Link href="/contact" className="btn-primary w-full">
+                <Link href="/contact" onClick={() => setOpen(false)} className="btn-primary w-full">
                   Start a project
                   <ArrowUpRight className="h-3.5 w-3.5" />
                 </Link>

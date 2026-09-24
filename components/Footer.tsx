@@ -1,6 +1,6 @@
 import Link from "next/link";
 import Image from "next/image";
-import { Github, Linkedin, Twitter, Facebook, Instagram, Mail, Phone, MapPin } from "lucide-react";
+import { Linkedin, Facebook, Instagram, Mail, Phone, MapPin } from "lucide-react";
 import { siteConfig, getCopyrightNotice } from "@/lib/site";
 
 const columns = [
@@ -35,11 +35,9 @@ const columns = [
 ];
 
 const socialLinks = [
-  { icon: Twitter, href: siteConfig.social.twitter, label: "Twitter" },
   { icon: Linkedin, href: siteConfig.social.linkedin, label: "LinkedIn" },
   { icon: Facebook, href: siteConfig.social.facebook, label: "Facebook" },
   { icon: Instagram, href: siteConfig.social.instagram, label: "Instagram" },
-  { icon: Github, href: siteConfig.social.github, label: "GitHub" },
 ];
 
 export default function Footer() {

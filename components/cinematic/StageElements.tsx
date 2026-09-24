@@ -6,7 +6,6 @@
  *   DataStreams      thin light trails running through the void
  *   Motes            fine digital particles
  *   AssemblyModules  the components that converge into the finished product
- *   VolumetricLight  a soft shaft raking across the scene
  *   ReflectiveFloor  the dark surface the machine comes to rest on
  *   FloatingOrbs     background geometry drifting at several speeds
  */
@@ -214,32 +213,6 @@ export function AssemblyModules({ progress }: { progress: number }) {
         </group>
       ))}
     </group>
-  );
-}
-
-/* ─────────────── Volumetric shaft ─────────────── */
-export function VolumetricLight({ intensity = 1 }: { intensity?: number }) {
-  const ref = useRef<THREE.Mesh>(null!);
-
-  useFrame((state) => {
-    if (!ref.current) return;
-    const t = state.clock.getElapsedTime();
-    const m = ref.current.material as THREE.MeshBasicMaterial;
-    m.opacity = (0.09 + Math.sin(t * 0.5) * 0.015) * intensity;
-    ref.current.rotation.z = Math.sin(t * 0.16) * 0.06;
-  });
-
-  return (
-    <mesh ref={ref} position={[-1.6, 3.4, -1.4]} rotation={[0, 0, 0.34]}>
-      <coneGeometry args={[2.6, 9, 32, 1, true]} />
-      <meshBasicMaterial
-        color="#C4B5FD"
-        transparent
-        opacity={0.09}
-        side={THREE.DoubleSide}
-        depthWrite={false}
-      />
-    </mesh>
   );
 }
 

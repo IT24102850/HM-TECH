@@ -9,17 +9,22 @@
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 
+const DURATION = 1600;
+/** Hard cutoff: the overlay is gone by now no matter what. */
+const HARD_DISMISS = DURATION + 1100;
+
 export default function LoadingScreen() {
   const [isLoading, setIsLoading] = useState(true);
   const [progress, setProgress] = useState(0);
+  /** Removes the overlay from the tree outright, bypassing the exit animation. */
+  const [removed, setRemoved] = useState(false);
 
   useEffect(() => {
-    const duration = 1600;
     const start = performance.now();
     let frame = 0;
 
     const tick = (now: number) => {
-      const p = Math.min((now - start) / duration, 1);
+      const p = Math.min((now - start) / DURATION, 1);
       const eased = 1 - Math.pow(1 - p, 3);
       setProgress(Math.round(eased * 100));
       if (p < 1) {
@@ -30,8 +35,25 @@ export default function LoadingScreen() {
     };
 
     frame = requestAnimationFrame(tick);
-    return () => cancelAnimationFrame(frame);
+
+    /* This overlay sits at z-100 across the whole viewport, so while it is
+       mounted it swallows every click on the site. It used to be dismissed
+       only by the rAF loop above, and its exit animation needs rAF as well -
+       so anything that stalls rAF (a background tab, an occluded window, a
+       long shader compile) left an invisible sheet over the page and nothing
+       was clickable. Timers keep running in those conditions, so they, not
+       animation frames, are what guarantee the overlay goes away. */
+    const soft = window.setTimeout(() => setIsLoading(false), DURATION + 120);
+    const hard = window.setTimeout(() => setRemoved(true), HARD_DISMISS);
+
+    return () => {
+      cancelAnimationFrame(frame);
+      window.clearTimeout(soft);
+      window.clearTimeout(hard);
+    };
   }, []);
+
+  if (removed) return null;
 
   return (
     <AnimatePresence>
@@ -41,6 +63,9 @@ export default function LoadingScreen() {
           initial={{ opacity: 1 }}
           exit={{
             y: "-100%",
+            // Stop intercepting clicks the instant the wipe starts, rather
+            // than when it finishes.
+            pointerEvents: "none",
             transition: { duration: 0.8, ease: [0.76, 0, 0.24, 1] },
           }}
           className="fixed inset-0 z-[100] grid place-items-center bg-paper"

@@ -8,15 +8,13 @@ export const siteConfig = {
   description:
     "HM Tech designs websites, develops software, builds AI-powered solutions, and helps businesses grow through technology.",
   email: "hello@hmtech.studio",
-  phone: "+1 (415) 555-0148",
-  phoneHref: "+14155550148",
-  address: "San Francisco · Remote-first",
+  phone: "+94 77 831 8476",
+  phoneHref: "+94778318476",
+  address: "Havelock, Colombo 05, Sri Lanka",
   social: {
-    twitter: "https://twitter.com/hmtech",
-    linkedin: "https://linkedin.com/company/hmtech",
-    github: "https://github.com/hmtech",
-    facebook: "https://facebook.com/hmtech",
-    instagram: "https://instagram.com/hmtech",
+    linkedin: "https://www.linkedin.com/company/hmtech-lk/",
+    facebook: "https://www.facebook.com/share/1K6ur2ohAN/?mibextid=wwXIfr",
+    instagram: "https://www.instagram.com/hmtech.lk?stkn=ZWxmZXMxZTh2cTh4&utm_source=qr",
   },
   businessHours: [
     { day: "Monday – Friday", hours: "9:00 AM – 6:00 PM" },

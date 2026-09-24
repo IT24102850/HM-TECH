@@ -34,7 +34,6 @@ import {
   FloatingOrbs,
   Motes,
   ReflectiveFloor,
-  VolumetricLight,
 } from "./StageElements";
 import { measureFilm, publishStage, sampleScroll, smoothstep, stage } from "./stageStore";
 
@@ -100,7 +99,6 @@ function Director({ quality, idle }: { quality: "high" | "low"; idle: number }) 
   const [explode, setExplode] = useState(0);
   const [assembly, setAssembly] = useState(0);
   const [floorOpacity, setFloorOpacity] = useState(0);
-  const [volume, setVolume] = useState(0.3);
   const [screenOn, setScreenOn] = useState(1);
   const [showModules, setShowModules] = useState(false);
 
@@ -229,8 +227,6 @@ function Director({ quality, idle }: { quality: "high" | "low"; idle: number }) 
     const nextFloor = smoothstep(0.7, 0.86, p) * (1 - stage.postFilm);
     if (Math.abs(nextFloor - floorOpacity) > 0.01) setFloorOpacity(nextFloor);
 
-    const nextVolume = 0.3 + smoothstep(0.55, 0.92, p) * 0.85;
-    if (Math.abs(nextVolume - volume) > 0.01) setVolume(nextVolume);
   });
 
   return (
@@ -247,7 +243,6 @@ function Director({ quality, idle }: { quality: "high" | "low"; idle: number }) 
         <ReflectiveFloor opacity={floorOpacity} />
       </group>
 
-      <VolumetricLight intensity={volume} />
       <DataStreams count={quality === "high" ? 18 : 10} idle={idle} />
       <Motes count={quality === "high" ? 600 : 280} idle={idle} />
       <FloatingOrbs count={quality === "high" ? 11 : 7} idle={idle} />
@@ -311,8 +306,6 @@ export default function CinematicStage() {
         <hemisphereLight args={["#ffffff", "#E4DDF7", 0.7]} />
         <directionalLight position={[5, 8, 6]} intensity={2.1} color="#ffffff" />
         <directionalLight position={[-6, 2, -4]} intensity={0.8} color="#A78BFA" />
-        <pointLight position={[0, 1.2, 3.2]} intensity={10} color="#C4B5FD" distance={14} />
-        <pointLight position={[3.4, -1, 2]} intensity={6} color="#D9B46A" distance={12} />
 
         {/* Studio reflections built in-scene, so the titanium has something to
             catch without fetching an HDR from the network. */}

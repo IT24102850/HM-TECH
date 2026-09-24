@@ -72,7 +72,9 @@ function WorkCard({ index, project }: { index: number; project: (typeof portfoli
 
           {/* layer 3 — logo panel */}
           <div
-            className="relative grid h-40 place-items-center overflow-hidden rounded-xl border border-iris-100 bg-iris-50/70"
+            /* White, because the product logos are JPGs on white: a tinted
+               panel behind them showed a hard rectangle around every logo. */
+            className="relative grid h-40 place-items-center overflow-hidden rounded-xl border border-iris-100 bg-white"
             style={{ transform: `translateZ(${hover ? 46 : 26}px)`, transition: "transform 420ms cubic-bezier(0.22,1,0.36,1)" }}
           >
             <Image
@@ -112,18 +114,17 @@ export default function WorkCards3D() {
     offset: ["start end", "end start"],
   });
   const eased = useSpring(scrollYProgress, { stiffness: 80, damping: 26 });
-  const yA = useTransform(eased, [0, 1], [50, -50]);
-  const yB = useTransform(eased, [0, 1], [14, -14]);
+  // One offset for the whole grid. Alternating it per card staggered the
+  // cards within a row, which looked like a layout bug rather than depth.
+  const y = useTransform(eased, [0, 1], [38, -38]);
 
   return (
     <div ref={ref}>
-      <div className="grid grid-cols-1 gap-6 md:grid-cols-3">
+      <motion.div style={{ y }} className="grid grid-cols-1 gap-6 md:grid-cols-3">
         {portfolioProjects.slice(0, 6).map((p, i) => (
-          <motion.div key={p.slug} style={{ y: i % 2 === 0 ? yA : yB }}>
-            <WorkCard index={i} project={p} />
-          </motion.div>
+          <WorkCard key={p.slug} index={i} project={p} />
         ))}
-      </div>
+      </motion.div>
 
       <div className="mt-14 flex justify-center">
         <Link href="/portfolio" className="btn-ghost">

@@ -7,6 +7,7 @@
  */
 
 import dynamic from "next/dynamic";
+import { usePathname } from "next/navigation";
 
 const CinematicStage = dynamic(() => import("./CinematicStage"), {
   ssr: false,
@@ -18,5 +19,7 @@ const CinematicStage = dynamic(() => import("./CinematicStage"), {
 });
 
 export default function StageMount() {
-  return <CinematicStage />;
+  const pathname = usePathname();
+
+  return pathname === "/" ? <CinematicStage /> : null;
 }

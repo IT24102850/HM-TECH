@@ -63,12 +63,12 @@ export default function Home() {
       <FilmCaptions />
 
       {/* ══════════════ STATS ══════════════ */}
-      <section className="container-px relative mx-auto max-w-7xl border-y border-iris-100 py-20">
+      <section id="stats" className="container-px relative mx-auto max-w-7xl border-y border-iris-100 py-20">
         <StatsParallax />
       </section>
 
       {/* ══════════════ SERVICES ══════════════ */}
-      <section className="section-py container-px relative mx-auto max-w-7xl">
+      <section id="services" className="section-py container-px relative mx-auto max-w-7xl">
         {/* background depth layer, moves fastest */}
         <ParallaxLayer
           speed={0.5}
@@ -94,7 +94,7 @@ export default function Home() {
       </section>
 
       {/* ══════════════ PROCESS ══════════════ */}
-      <section className="section-py container-px relative mx-auto max-w-7xl">
+      <section id="process" className="section-py container-px relative mx-auto max-w-7xl">
         <ParallaxLayer
           speed={0.4}
           className="pointer-events-none absolute inset-0 -z-10"
@@ -116,7 +116,7 @@ export default function Home() {
       </section>
 
       {/* ══════════════ TECHNOLOGY ══════════════ */}
-      <section className="section-py container-px relative mx-auto max-w-7xl">
+      <section id="technologies" className="section-py container-px relative mx-auto max-w-7xl">
         <ParallaxLayer
           speed={0.55}
           className="pointer-events-none absolute inset-0 -z-10"
@@ -140,7 +140,7 @@ export default function Home() {
       </section>
 
       {/* ══════════════ WORK ══════════════ */}
-      <section className="section-py container-px relative mx-auto max-w-7xl">
+      <section id="work" className="section-py container-px relative mx-auto max-w-7xl">
         <ParallaxLayer
           speed={0.45}
           className="pointer-events-none absolute inset-0 -z-10"
@@ -164,7 +164,7 @@ export default function Home() {
       </section>
 
       {/* ══════════════ CTA ══════════════ */}
-      <section className="section-py container-px mx-auto max-w-7xl">
+      <section id="contact-cta" className="section-py container-px mx-auto max-w-7xl">
         <FinalCTA />
       </section>
     </>
