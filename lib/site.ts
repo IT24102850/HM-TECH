@@ -7,7 +7,7 @@ export const siteConfig = {
   foundedYear: 2019,
   description:
     "HM Tech designs websites, develops software, builds AI-powered solutions, and helps businesses grow through technology.",
-  email: "hello@hmtech.studio",
+  email: "info@hmtech.lk",
   phone: "+94 77 831 8476",
   phoneHref: "+94778318476",
   address: "Havelock, Colombo 05, Sri Lanka",
