@@ -10,11 +10,14 @@ export const siteConfig = {
   email: "info@hmtech.lk",
   phone: "+94 77 831 8476",
   phoneHref: "+94778318476",
+  whatsapp: "+94 74 377 5572",
+  whatsappHref: "94743775572",
   address: "Havelock, Colombo 05, Sri Lanka",
   social: {
     linkedin: "https://www.linkedin.com/company/hmtech-lk/",
     facebook: "https://www.facebook.com/share/1K6ur2ohAN/?mibextid=wwXIfr",
     instagram: "https://www.instagram.com/hmtech.lk?stkn=ZWxmZXMxZTh2cTh4&utm_source=qr",
+    whatsapp: "https://wa.me/94743775572",
   },
   businessHours: [
     { day: "Monday – Friday", hours: "9:00 AM – 6:00 PM" },

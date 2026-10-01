@@ -16,6 +16,9 @@ export async function POST(request: Request) {
 
     const smtpHost = process.env.SMTP_HOST;
     const smtpPort = Number(process.env.SMTP_PORT || 587);
+    const smtpSecure = process.env.SMTP_SECURE
+      ? process.env.SMTP_SECURE === "true"
+      : smtpPort === 465;
     const smtpUser = process.env.SMTP_USER;
     const smtpPass = process.env.SMTP_PASS;
     const fromAddress = process.env.SMTP_FROM || siteConfig.email;
@@ -34,11 +37,16 @@ export async function POST(request: Request) {
     const transporter = nodemailer.createTransport({
       host: smtpHost,
       port: smtpPort,
-      secure: smtpPort === 465,
+      secure: smtpSecure,
       auth: {
         user: smtpUser,
         pass: smtpPass,
       },
+      tls: {
+        rejectUnauthorized: false,
+      },
+      debug: true,
+      logger: true,
     });
 
     await transporter.sendMail({
@@ -68,10 +76,16 @@ ${message}
 
     return NextResponse.json({ ok: true });
   } catch (error) {
-    console.error("Contact form email error:", error);
+    const message =
+      error instanceof Error
+        ? error.message
+        : "Unknown SMTP error occurred.";
+
+    console.error("Contact form email error:", message);
     return NextResponse.json(
       {
         error: "The message could not be sent. Please check your SMTP settings or try again later.",
+        details: message,
       },
       { status: 500 }
     );

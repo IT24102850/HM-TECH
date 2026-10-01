@@ -9,6 +9,7 @@ import StageMount from "@/components/cinematic/StageMount";
 import SmoothScroll from "@/components/SmoothScroll";
 import ScrollProgress from "@/components/ScrollProgress";
 import CustomCursor from "@/components/CustomCursor";
+import WhatsAppButton from "@/components/WhatsAppButton";
 import { siteConfig } from "@/lib/site";
 
 const display = Space_Grotesk({
@@ -104,6 +105,7 @@ export default function RootLayout({
         <Navbar />
         <main>{children}</main>
         <Footer />
+        <WhatsAppButton />
       </body>
     </html>
   );
