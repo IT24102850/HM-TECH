@@ -8,8 +8,8 @@ export const siteConfig = {
   description:
     "HM Tech designs websites, develops software, builds AI-powered solutions, and helps businesses grow through technology.",
   email: "info@hmtech.lk",
-  phone: "+94 77 831 8476",
-  phoneHref: "+94778318476",
+  phone: "+94 74 377 5572",
+  phoneHref: "+94743775572",
   whatsapp: "+94 74 377 5572",
   whatsappHref: "94743775572",
   address: "Havelock, Colombo 05, Sri Lanka",
